@@ -78,10 +78,24 @@ cloud administration console is not required to complete the review workflow.
 
 ## Visual and interaction requirements
 
-Statecraft brand assets live in `assets/`. The running app owns presentation in
-`web/src/style.css` and view composition in `web/src/review.ts`. Preserve its restrained
-forest/neutral palette, semantic risk accents and evidence density unless a design
-change has a clear reason. Color must not carry state by itself.
+The canonical brand assets are [the layered state mark](assets/statecraft-mark.svg)
+and [the full wordmark lockup](assets/statecraft-lockup.svg). Use those assets,
+not a Unicode diamond or a newly drawn approximation. The compact application
+header pairs the original mark with the title-case **Statecraft** wordmark and
+**Infrastructure change, understood.** tagline. The mark also serves as the favicon.
+
+The palette comes from those SVGs: navy `#081220`, mint `#63ead1` → `#1bb981`,
+blue `#31a7ff` → `#2563eb`, ice `#d8eefb`, near-white `#f7fbff`, and slate
+`#9fb2c7`. Use navy/slate surfaces, blue action/selection accents, and mint for
+positive state. Light surfaces use related accessible tints. Preserve distinct
+warning/destructive colors; brand color alone must not communicate status.
+Typography follows the lockup's Inter/system sans-serif stack, with a strong,
+tightly spaced title-case wordmark and readable supporting text.
+
+The app owns presentation tokens in `web/src/style.css` and composition in
+`web/src/review.ts`. Keep the SVGs as the source of truth and import them into the
+app build rather than maintaining a second copy. Branding should support the dense
+review workspace without obscuring evidence or changing workflow meaning.
 
 Keyboard focus must remain useful after filtering, changing views, updating state,
 opening/closing a decision form and submitting a command. Controls need meaningful

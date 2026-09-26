@@ -1,15 +1,22 @@
 :root {
   color-scheme: light dark;
-  --bg: light-dark(#f2f5f3, #101916);
-  --surface: light-dark(#fff, #17231e);
-  --subtle: light-dark(#f7f9f8, #14201b);
-  --line: light-dark(#dce5df, #304239);
-  --ink: light-dark(#20352a, #edf5ef);
-  --muted: light-dark(#607268, #a4b7aa);
-  --accent: light-dark(#176548, #8ddbb6);
-  --accent-bg: light-dark(#e6f3eb, #243e30);
+  /* Canonical palette from assets/statecraft-{mark,lockup}.svg. */
+  --brand-navy: #081220;
+  --brand-mint: #63ead1;
+  --brand-blue: #2563eb;
+  --brand-ice: #d8eefb;
+  --bg: light-dark(#edf3f9, var(--brand-navy));
+  --surface: light-dark(#fff, #0d1b2a);
+  --subtle: light-dark(#f5f8fc, #102235);
+  --line: light-dark(#d5e0ec, #263c52);
+  --ink: light-dark(var(--brand-navy), #f7fbff);
+  --muted: light-dark(#52677d, #9fb2c7);
+  --accent: light-dark(#1765c1, #79beff);
+  --accent-bg: light-dark(#eaf3ff, #142f48);
+  --success: light-dark(#107552, var(--brand-mint));
+  --success-bg: light-dark(#e5f7f0, #0d3833);
   --danger: light-dark(#a32c38, #ffb3b8);
-  --danger-bg: light-dark(#fff0f0, #3b262a);
+  --danger-bg: light-dark(#fff0f0, #3b2633);
   --warning: light-dark(#815011, #edc993);
   --warning-bg: light-dark(#fcf3e5, #372f22);
   font-family:
@@ -109,31 +116,50 @@ small {
   justify-content: space-between;
   align-items: center;
   gap: 18px;
-  background: var(--subtle);
-  padding: 15px 28px;
-  border-bottom: 1px solid var(--line);
+  background: var(--brand-navy);
+  padding: 14px 28px;
+  border-bottom: 1px solid #263c52;
 }
 .brand {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 9px;
-  color: var(--ink);
+  gap: 12px;
+  min-width: 0;
+  flex-shrink: 0;
+  color: #f7fbff;
   text-decoration: none;
-  font-weight: 650;
-  letter-spacing: 2px;
-  font-size: 13px;
 }
 .brand-mark {
-  font-size: 24px;
-  color: var(--accent);
+  display: block;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+.brand-copy {
+  display: grid;
+  gap: 1px;
+}
+.brand-wordmark {
+  font-size: 26px;
+  line-height: 1.1;
+  font-weight: 750;
+  letter-spacing: -1px;
+}
+.brand-tagline {
+  color: #9fb2c7;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.brand:focus-visible {
+  outline-color: var(--brand-mint);
 }
 .repo-label,
 .demo-label {
   font-size: 12px;
-  color: var(--muted);
+  color: #9fb2c7;
 }
 .demo-label {
-  border: 1px solid var(--line);
+  border: 1px solid #263c52;
   border-radius: 4px;
   padding: 3px 7px;
 }
@@ -203,14 +229,14 @@ small {
   background: var(--subtle);
 }
 .button-primary {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--surface);
+  background: var(--brand-blue);
+  border-color: var(--brand-blue);
+  color: #fff;
 }
 .button-primary:hover:not(:disabled) {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--bg);
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  color: #fff;
 }
 .button-link {
   background: transparent;
@@ -239,8 +265,8 @@ small {
   background: var(--warning-bg);
 }
 .badge--good {
-  color: var(--accent);
-  background: var(--accent-bg);
+  color: var(--success);
+  background: var(--success-bg);
 }
 .lifecycle {
   display: grid;
@@ -280,8 +306,8 @@ small {
   font-size: 11px;
 }
 .is-done .step-number {
-  background: var(--accent-bg);
-  color: var(--accent);
+  background: var(--success-bg);
+  color: var(--success);
 }
 .view-tabs {
   display: flex;
@@ -527,8 +553,8 @@ small {
   color: var(--danger);
 }
 .after {
-  background: var(--accent-bg);
-  color: var(--accent);
+  background: var(--success-bg);
+  color: var(--success);
 }
 .subheading {
   margin: 24px 0 12px;
@@ -607,7 +633,7 @@ small {
   color: var(--muted);
 }
 .requirement-mark.is-good {
-  color: var(--accent);
+  color: var(--success);
 }
 .readiness > .button {
   margin-top: 10px;

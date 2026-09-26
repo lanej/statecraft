@@ -293,7 +293,9 @@ test("provider text, comments, policy text and evidence are escaped in every vie
     "history",
   ]) {
     const html = renderReview(r, { ...initialUI(), view });
-    assert.ok(!html.includes("<img"));
+    assert.ok(!html.includes(payload));
+    // The trusted brand asset is an image; untrusted markup must remain text.
+    assert.doesNotMatch(html, /<img[^>]*onerror/);
     assert.ok(html.includes("&lt;img"));
   }
 });

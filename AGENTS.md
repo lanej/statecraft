@@ -26,6 +26,9 @@ those documents when behavior, boundaries, or the next useful step changes.
 
 ## What is running
 
+- Use the existing layered mark, title-case wordmark, tagline, and navy/mint/blue
+  palette from `assets/` and [DESIGN.md](DESIGN.md). Do not substitute a generic
+  icon or invent another palette.
 - Work in `web/` for the current TypeScript/Vite interface. Root-level `index.html`,
   `app.js`, `styles.css`, and `fixtures/` are the older static prototype.
 - `cmd/statecraft` composes an isolated mock workflow. It does not invoke the live

@@ -1,6 +1,17 @@
 import "./style.css";
 import type { Action, Command, Review } from "./contracts";
-import { escapeHTML, initialUI, renderReview, type View } from "./review";
+import {
+  brandMarkURL,
+  escapeHTML,
+  initialUI,
+  renderReview,
+  type View,
+} from "./review";
+const favicon = document.createElement("link");
+favicon.rel = "icon";
+favicon.type = "image/svg+xml";
+favicon.href = brandMarkURL;
+document.head.append(favicon);
 const app = document.querySelector<HTMLElement>("#app")!;
 const ui = initialUI();
 let review: Review | null = null;
