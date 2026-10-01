@@ -34,6 +34,16 @@ GitHub/Atlantis/OPA types do not define the frontend or domain. Initial sample
 models deliberately cover less than the target architecture; do not read every
 future entity in `architecture.md` as an implemented feature.
 
+## Mocked provider acceptance path
+
+A separate signed GitHub webhook → source loading → Atlantis planning acceptance
+harness now exists. See [planning acceptance](planning-acceptance.md) for its command,
+scenarios, boundaries, and production gaps. `ProposedPlans` orchestrates the existing
+provider ports; the HTTP ingress is intentionally not mounted in the demo runtime.
+It retains command evidence and checks source freshness without constructing a
+PlanSet or approval. Durable webhook receipts/queued work and evidence ingestion
+remain required before deployment.
+
 ## Code map
 
 | Change you need to make | Start here |
@@ -115,3 +125,4 @@ new source-of-truth design or adapter contract, and record unresolved decisions.
 Do not preserve chat chronology, machine-specific setup, or passing test counts as
 permanent product documentation. Evidence, remaining limitations, and decisions
 another agent would otherwise have to rediscover are the useful handoff.
+
