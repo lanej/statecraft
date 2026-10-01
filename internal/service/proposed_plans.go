@@ -14,15 +14,15 @@ import (
 // means all configured roots produced plans for an unchanged source revision;
 // it does not establish artifact identity, policy compliance, or approval.
 type ProposedPlan struct {
-	Source domain.SourceReviewSnapshot
+	Source         domain.SourceReviewSnapshot
 	PlannedHeadSHA string
-	Run domain.PlanRun
-	Complete bool
-	Stale bool
+	Run            domain.PlanRun
+	Complete       bool
+	Stale          bool
 }
 
 type ProposedPlans struct {
-	source ports.SourceControl
+	source  ports.SourceControl
 	planner ports.Planner
 }
 
@@ -76,7 +76,9 @@ func completePlan(run domain.PlanRun, roots []domain.RootSelector) bool {
 	}
 	expected := make(map[string]bool, len(roots))
 	for _, root := range roots {
-		if expected[root.StableID()] { return false }
+		if expected[root.StableID()] {
+			return false
+		}
 		expected[root.StableID()] = true
 	}
 	seen := make(map[string]bool, len(roots))
@@ -84,8 +86,12 @@ func completePlan(run domain.PlanRun, roots []domain.RootSelector) bool {
 		if !expected[attempt.RootID] || attempt.Status != "succeeded" || attempt.ErrorPresent || attempt.Failure != "" {
 			return false
 		}
-		if attempt.Phase == "policy_check" { continue }
-		if attempt.Phase != "plan" || seen[attempt.RootID] { return false }
+		if attempt.Phase == "policy_check" {
+			continue
+		}
+		if attempt.Phase != "plan" || seen[attempt.RootID] {
+			return false
+		}
 		seen[attempt.RootID] = true
 	}
 	return len(seen) == len(expected)
