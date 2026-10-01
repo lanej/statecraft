@@ -14,6 +14,10 @@ scenarios. GitHub and Atlantis adapters have local contract tests and remain out
 the executable. Policy ports exist; an OPA adapter does not. The
 [handoff](handoff.md) maps the implementation and its limitations.
 
+The [planning acceptance harness](planning-acceptance.md) exercises signed GitHub
+PR delivery through the real provider adapters against local HTTP mocks. It does
+not mount a production webhook receiver or enable live planning in the demo.
+
 ## Required capabilities
 
 | Capability | Current state | Required destination / delivery |
@@ -180,3 +184,4 @@ explicit accessibility criteria rather than treating a screenshot as proof.
 Keep priorities and completion criteria current as these decisions are made. Record
 material choices with their rationale near the owning architecture/integration
 document, and update [the handoff](handoff.md) when a slice changes the runnable path.
+
