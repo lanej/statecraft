@@ -82,9 +82,12 @@ than `main`. CI compares against the PR target, or `origin/main` for a push.
 Connect transport does not establish authentication, durable evidence, or
 production execution. The next bounded slice is the R2 ingestion/storage contract.
 
-## Workflow logging
+## Workflow logging and publication example
 
 The executable composes a JSON `slog` completion interceptor. Successful RPCs log
 returned state/version and review/plan IDs; rejected actions log the error code,
 action, expected version, and requested review ID. Private rationale/evidence and
 raw documents are excluded. These are transport outcomes, not a durable audit log.
+The [publication walkthrough](comment-publication.md) exercises the generated RPC
+workflow, pure core summary, and real GitHub SDK against a local HTTP mock and
+prints actual logs. The GitHub publisher remains separate from the mock runtime.

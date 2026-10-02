@@ -48,6 +48,7 @@ future entity in `architecture.md` as an implemented feature.
 | Sample assessment and action gates | `internal/adapters/mock/policies.go` |
 | Transactional demo store | `internal/adapters/mock/store.go` |
 | Source metadata refresh and invalidation | `internal/service/source_reviews.go`, `internal/domain/source_control.go` |
+| Pure proposal summaries and comment publication | `internal/domain/proposal_summary.go`, `internal/adapters/github/proposal_comments.go`, [example](comment-publication.md) |
 | Structured RPC outcomes | `internal/adapters/connectapi/logging.go` and runtime logger composition |
 | External mappings | `internal/adapters/github/`, `internal/adapters/atlantis/` |
 | Public API schema and generation | `proto/statecraft/v1/review.proto`, `buf.yaml`, `buf.gen.yaml` |
