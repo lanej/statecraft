@@ -101,6 +101,16 @@ now exercises these ports through `DemoWorkflow`; it has no access to the live
 `Planner`, `Executor`, or `SourceControl` ports. `DemoPlanner` is intentionally a
 separate simulation capability, not an alternative production execution path.
 
+### Pragmatic publication example
+
+[Proposal comment publication](comment-publication.md) demonstrates the functional
+core/imperative shell boundary. `domain.SummarizeProposal` takes only Statecraft
+plan/policy/decision facts and explicit time. The shell selects a GitHub PR;
+`SourceControl.PublishProposalComment` renders and publishes the result using the
+SDK. GitHub Markdown, destination, receipts, and I/O stay in that integration.
+This provider-specific capability does not introduce a new generic messaging port.
+Comments remain informational and cannot become authoritative plan approval.
+
 ## Target system boundaries
 
 ```text
