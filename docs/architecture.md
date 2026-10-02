@@ -250,8 +250,9 @@ Source-control reviews are separate `ExternalReviewDecision` history in
 `Review.SourceDecisions`. Refreshing that history preserves Statecraft's own
 decisions. A source review's commit or editable body cannot establish an
 authoritative PlanSet approval; an authenticated persisted decision is required.
-The temporary JSON bridge exposes only Statecraft decisions, matching the current
-protobuf/frontend approval contract.
+The Connect transport exposes only Statecraft decisions through the generated
+protobuf contract; source history remains internal. Domain-to-message mapping
+lives in `internal/adapters/connectapi`, not in the domain or services.
 
 A change to an existing review's head marks the review and roots stale while
 retaining earlier evidence and decisions as history. Metadata refresh does not

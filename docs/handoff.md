@@ -14,10 +14,11 @@ intent and invariants; [DESIGN.md](../DESIGN.md) owns interaction rules;
 priority, feature gaps, and completion criteria. This file owns the current code
 map and practical continuation notes.
 
-The recommended next implementation is **R1: generated Connect transport**. Keep
-it bounded to replacing the handwritten runtime boundary without changing the
-review behavior or enabling external execution. User feedback on the workbench can
-be addressed independently; do not treat the current composition as a frozen design.
+**R1: generated Connect transport is implemented.** The recommended next task is
+**R2: durable proposal/evidence ingestion design** before selecting storage or
+expanding the synthetic demo shape. Preserve the current mock composition while
+that contract is developed. User feedback on the workbench can be addressed
+independently; do not treat the current composition as a frozen design.
 
 ## Current baseline
 
@@ -28,7 +29,7 @@ be addressed independently; do not treat the current composition as a frozen des
 | Policy | `PolicyEvaluator` and `ActionPolicy` ports with deterministic sample rules | OPA/Rego evaluation, trusted policy distribution, reference-data/input digests, revocation, or organization policy administration |
 | Store | Isolated in-memory sessions; transactional expected-version mutation; detached reads | Durable storage, restart recovery, retention, tenant isolation, or a production audit store |
 | Integration adapters | GitHub reads/reviews/checks; Atlantis command mapping and notification decoding; local HTTP contract tests | Runtime credentials, configured installations, authenticated webhook ingress, reconciliation, or exact-artifact apply |
-| API | Versioned protobuf definition plus runnable JSON routes and handwritten TS contract | Generated Connect handler/client composition |
+| API | Generated Connect handler/client, domain mapping, pinned local generation, contract and format CI checks | Authentication, deployed service, or real evidence ingestion |
 
 GitHub/Atlantis/OPA types do not define the frontend or domain. Initial sample
 models deliberately cover less than the target architecture; do not read every
@@ -39,7 +40,7 @@ future entity in `architecture.md` as an implemented feature.
 | Change you need to make | Start here |
 | --- | --- |
 | Runtime composition and listen address | `cmd/statecraft/main.go` |
-| Demo HTTP routes, decoding, error mapping | `internal/adapters/httpapi/demo.go` and its test |
+| Demo HTTP routes, decoding, error mapping | `internal/adapters/connectapi/reviews.go`, `mapping.go`, and their tests |
 | Workflow transitions and command-time revalidation | `internal/service/demo_workflow.go` and its test |
 | Review, evidence, decision, and acceptance shapes | `internal/domain/review.go`, `internal/domain/workflow.go` |
 | Source and execution contracts | `internal/domain/source_control.go`, `internal/domain/execution.go`, `internal/ports/` |
@@ -49,7 +50,7 @@ future entity in `architecture.md` as an implemented feature.
 | Source metadata refresh and invalidation | `internal/service/source_reviews.go`, `internal/domain/source_control.go` |
 | External mappings | `internal/adapters/github/`, `internal/adapters/atlantis/` |
 | Public API schema and generation | `proto/statecraft/v1/review.proto`, `buf.yaml`, `buf.gen.yaml` |
-| Frontend contract and request/focus/session behavior | `web/src/contracts.ts`, `web/src/main.ts` |
+| Frontend contract and request/focus/session behavior | `web/src/gen/statecraft/v1/review_pb.ts`, `web/src/api.ts`, `web/src/main.ts` |
 | View composition and presentation logic | `web/src/review.ts`, `web/src/style.css` |
 | Frontend rendering regressions | `web/test/review.test.mjs` |
 | Actual running-UI examples | `docs/screenshots/` |
@@ -96,8 +97,9 @@ returns a conflict instead of silently replaying a decision.
   normalized plan-ingestion design before processing real artifacts.
 - Demo transitions complete synchronously. There is no durable queue, operation
   receipt, uncertain-result recovery, external lock model, or execution cancel path.
-- The JSON API and TS contract can drift from protobuf until R1. Remote Buf plugins
-  are not pinned yet; generation and reproducibility are part of that task.
+- Generated message types use `bigint` for 64-bit values in TypeScript. Preserve
+  that precision; use protobuf equality instead of `JSON.stringify` on reviews.
+  Regenerate rather than editing `gen/` or `web/src/gen/`. See [transport](transport.md).
 - Current tests exercise domain/service behavior, provider mapping, HTTP validation,
   and rendered HTML. Browser walkthroughs/screenshots exist, but there is no
   automated end-to-end browser suite or comprehensive accessibility verification.
