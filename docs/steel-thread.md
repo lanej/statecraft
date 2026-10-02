@@ -23,7 +23,7 @@ local development demo without authentication, not a deployable approval service
 ## Boundaries
 
 ```text
-TypeScript workbench → JSON HTTP adapter → DemoWorkflow
+TypeScript workbench → generated Connect RPC → DemoWorkflow
                                             ├─ WorkflowStore → in-memory sessions
                                             ├─ DemoPlanner → synthetic changes
                                             ├─ PolicyEvaluator → sample policy rules
@@ -64,20 +64,18 @@ The seven entry scenarios are policy review, ready to plan, routine change,
 incomplete planning, stale approval, expired acceptance, and partial apply failure.
 They support repeatable investigation of both the normal path and recovery.
 
-## Temporary HTTP bridge
+## Generated Connect boundary
 
-| Method | Route | Purpose |
-| --- | --- | --- |
-| POST | `/api/demos` | Create an isolated review from a named scenario |
-| GET | `/api/demos/{id}` | Read the current review and action eligibility |
-| POST | `/api/demos/{id}/actions` | Submit an action with `expectedVersion` and any required rationale/evidence |
-| GET | `/api/reviews/pr-1842` | Original read-only steel-thread fixture |
+`DemoWorkflowService` provides `CreateDemo`, `GetDemo`, and `ActOnDemo` under
+`/statecraft.v1.DemoWorkflowService/`. The original read-only fixture `pr-1842`
+remains available through `/statecraft.v1.ReviewService/GetReview`. The former
+`/api/demos` and `/api/reviews` JSON routes are removed.
 
-The JSON bridge stays temporary. `proto/statecraft/v1/review.proto` declares the
-provider-neutral review and demo workflow services; generated Connect handlers and
-clients are not wired yet. Do not treat the handwritten TypeScript contract as
-generated code. Commands cannot supply reviewer/authorizer identity; the demo uses
-fixed personas, not authentication.
+Go handlers/clients and TypeScript messages/service descriptors are generated from
+`proto/statecraft/v1/review.proto`. The browser uses a generated client; rendering
+uses the generated review types. Commands cannot supply reviewer/authorizer
+identity; the demo uses fixed personas, not authentication. See [transport](transport.md)
+for error codes, request limits, generation, and CI enforcement.
 
 ## Production work still required
 

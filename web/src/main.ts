@@ -1,43 +1,36 @@
 import "./style.css";
-import type { Action, Command, Review } from "./contracts";
+import { equals } from "@bufbuild/protobuf";
+import { createConnectTransport } from "@connectrpc/connect-web";
 import {
+  createDemoAPI,
+  type DemoCommand,
+  requestMessage,
+  shouldRefreshReview,
+} from "./api";
+import { type Review, ReviewSchema } from "./gen/statecraft/v1/review_pb";
+import {
+  type Action,
   brandMarkURL,
   escapeHTML,
   initialUI,
   renderReview,
   type View,
 } from "./review";
+
 const favicon = document.createElement("link");
 favicon.rel = "icon";
 favicon.type = "image/svg+xml";
 favicon.href = brandMarkURL;
 document.head.append(favicon);
-const app = document.querySelector<HTMLElement>("#app")!;
+const appElement = document.querySelector<HTMLElement>("#app");
+if (!appElement) throw new Error("The workspace container is missing.");
+const app = appElement;
 const ui = initialUI();
 let review: Review | null = null;
 const sessionKey = "statecraft-demo-session-v1";
-class RequestError extends Error {
-  status: number;
-  constructor(message: string, status: number) {
-    super(message);
-    this.status = status;
-  }
-}
-async function request(path: string, body?: unknown): Promise<Review> {
-  const response = await fetch(path, {
-    method: body ? "POST" : "GET",
-    headers: body ? { "Content-Type": "application/json" } : {},
-    body: body ? JSON.stringify(body) : undefined,
-    signal: AbortSignal.timeout(30000),
-  });
-  const value = await response.json();
-  if (!response.ok)
-    throw new RequestError(
-      value.error || "The demo request failed.",
-      response.status,
-    );
-  return value as Review;
-}
+const api = createDemoAPI(
+  createConnectTransport({ baseUrl: window.location.origin }),
+);
 function render(focus?: string) {
   if (!review) return;
   const active = app.contains(document.activeElement)
@@ -86,7 +79,7 @@ async function create(scenario: string) {
   ui.error = "";
   render();
   try {
-    review = await request("/api/demos", { scenario });
+    review = await api.create(scenario);
     Object.assign(ui, initialUI());
     ui.view =
       scenario === "partial"
@@ -100,7 +93,7 @@ async function create(scenario: string) {
       /* Optional storage. */
     }
   } catch (error) {
-    ui.error = (error as Error).message;
+    ui.error = requestMessage(error);
   } finally {
     ui.busy = false;
     if (review) render();
@@ -111,21 +104,18 @@ async function create(scenario: string) {
 async function act() {
   if (!review || !ui.form || ui.busy) return;
   const form = ui.form,
-    cmd: Command = {
+    cmd = {
       action: form.action,
       expectedVersion: review.version,
       violationId: form.violationId,
       reason: form.reason,
       evidence: form.evidence,
-    };
+    } satisfies DemoCommand;
   ui.busy = true;
   ui.error = "";
   render();
   try {
-    review = await request(
-      `/api/demos/${encodeURIComponent(review.id)}/actions`,
-      cmd,
-    );
+    review = await api.act(review.id, cmd);
     ui.form = null;
     ui.notice =
       "Demo action completed. No live infrastructure or GitHub review was changed.";
@@ -139,10 +129,10 @@ async function act() {
       ui.query = "";
     }
   } catch (error) {
-    ui.error = (error as Error).message;
-    if (error instanceof RequestError && [409, 422].includes(error.status)) {
+    ui.error = requestMessage(error);
+    if (shouldRefreshReview(error)) {
       try {
-        review = await request(`/api/demos/${encodeURIComponent(review.id)}`);
+        review = await api.get(review.id);
       } catch {
         /* Preserve draft and original error. */
       }
@@ -241,7 +231,7 @@ async function start() {
   }
   if (id) {
     try {
-      review = await request(`/api/demos/${encodeURIComponent(id)}`);
+      review = await api.get(id);
       render();
       return;
     } catch {
@@ -263,13 +253,13 @@ setInterval(async () => {
     return;
   try {
     const id = review.id,
-      fresh = await request(`/api/demos/${encodeURIComponent(id)}`);
+      fresh = await api.get(id);
     if (
       !ui.busy &&
       !ui.form &&
       review.id === id &&
       fresh.version >= review.version &&
-      JSON.stringify(fresh) !== JSON.stringify(review)
+      !equals(ReviewSchema, fresh, review)
     ) {
       review = fresh;
       render();

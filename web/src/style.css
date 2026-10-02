@@ -20,11 +20,7 @@
   --warning: light-dark(#815011, #edc993);
   --warning-bg: light-dark(#fcf3e5, #372f22);
   font-family:
-    Inter,
-    ui-sans-serif,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
+    Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
   font-size: 14px;
   line-height: 1.5;
@@ -921,7 +917,7 @@ summary {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
   }
   .roots {
-    grid-column: 1/-1;
+    grid-column: 1 / -1;
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
@@ -1048,11 +1044,13 @@ summary {
   }
   input,
   textarea {
+    /* biome-ignore lint/complexity/noImportantStyles: Prevent input zoom on touch devices. */
     font-size: 16px !important;
   }
 }
 @media (prefers-reduced-motion: reduce) {
   * {
+    /* biome-ignore lint/complexity/noImportantStyles: Reduced-motion preferences must override scrolling rules. */
     scroll-behavior: auto !important;
   }
 }

@@ -1,5 +1,20 @@
-import type { Action, Change, Decision, Review, Violation } from "./contracts";
-export type { Review } from "./contracts";
+import type {
+  Change,
+  ReviewDecision as Decision,
+  Review,
+  PolicyViolation as Violation,
+} from "./gen/statecraft/v1/review_pb";
+
+export type { Review } from "./gen/statecraft/v1/review_pb";
+// Presentation choices; the public message shapes are generated from protobuf.
+export type Action =
+  | "plan"
+  | "approve"
+  | "request_changes"
+  | "request_acceptance"
+  | "grant_acceptance"
+  | "apply"
+  | "verify";
 // Use the canonical asset; Vite resolves it into the built application.
 export const brandMarkURL = new URL(
   "../../assets/statecraft-mark.svg",
@@ -53,7 +68,7 @@ export const escapeHTML = (value: unknown): string =>
     (c) =>
       ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
         c
-      ]!,
+      ] ?? c,
   );
 const e = escapeHTML;
 const labels: Record<string, string> = {
@@ -184,14 +199,14 @@ function actionBar(r: Review, s: UIState): string {
     );
   if (r.state === "applied")
     return workflowButton(r, s, "verify", "Verify result", true);
-  if (allowed(r, "apply"))
-    return workflowButton(r, s, "apply", `Apply Plan ${r.plan!.number}`, true);
-  if (allowed(r, "approve"))
+  if (r.plan && allowed(r, "apply"))
+    return workflowButton(r, s, "apply", `Apply Plan ${r.plan.number}`, true);
+  if (r.plan && allowed(r, "approve"))
     return workflowButton(
       r,
       s,
       "approve",
-      `Approve Plan ${r.plan!.number}`,
+      `Approve Plan ${r.plan.number}`,
       true,
     );
   if (
@@ -322,7 +337,7 @@ function resourceDetail(r: Review, s: UIState, c: Change): string {
 function workspace(r: Review, s: UIState): string {
   const list = visibleChanges(r, s),
     selected = list.find((c) => c.id === s.selected) ?? list[0];
-  return `<section class="workspace"><aside class="roots" aria-label="Infrastructure roots"><p class="eyebrow">Scope</p>${[{ id: "all", name: "All roots" }, ...r.roots.map((root) => ({ id: root.id, name: root.name.split("/").at(-1)! }))].map((root) => btn(`${root.name} · ${root.id === "all" ? r.changes.length : r.changes.filter((c) => c.rootId === root.id).length}`, "root", `data-value="${e(root.id)}" aria-pressed="${s.root === root.id}"`)).join("")}<p class="root-caption">azure / prod<br>${r.roots.length} expected roots<br><br>${r.roots.filter((x) => x.status === "planned").length} plans current</p></aside><section class="resource-list"><div class="list-heading"><h2>Changed resources</h2><p>${list.length} changes · consequences first</p><label class="search"><span aria-hidden="true">⌕</span><input type="search" id="resource-search" aria-label="Filter resources" placeholder="Filter resources" value="${e(s.query)}"></label></div>${list.map((c) => `<button type="button" class="resource-row" data-ui="select" data-value="${e(c.id)}" aria-pressed="${selected?.id === c.id}"><span class="resource-title">${e(c.name)}<span class="resource-glyph" aria-hidden="true">${c.id === "c3" ? "▤" : "◇"}</span></span><code>${e(c.address)}</code><span class="resource-summary">${e(c.summary)}</span><span class="resource-meta">${badge(label(c.action), c.action)}<span>${e(c.rootId)} · ${e(c.risk)}</span></span></button>`).join("") || '<p class="empty">No matching resource changes. Try another root or clear the filter.</p>'}</section>${selected ? resourceDetail(r, s, selected) : '<aside class="inspector"><h2>No resource selected</h2><p class="muted">Select a root with current evidence or clear the filter. A failed root still needs a successful plan.</p></aside>'}</section>`;
+  return `<section class="workspace"><aside class="roots" aria-label="Infrastructure roots"><p class="eyebrow">Scope</p>${[{ id: "all", name: "All roots" }, ...r.roots.map((root) => ({ id: root.id, name: root.name.split("/").at(-1) ?? root.name }))].map((root) => btn(`${root.name} · ${root.id === "all" ? r.changes.length : r.changes.filter((c) => c.rootId === root.id).length}`, "root", `data-value="${e(root.id)}" aria-pressed="${s.root === root.id}"`)).join("")}<p class="root-caption">azure / prod<br>${r.roots.length} expected roots<br><br>${r.roots.filter((x) => x.status === "planned").length} plans current</p></aside><section class="resource-list"><div class="list-heading"><h2>Changed resources</h2><p>${list.length} changes · consequences first</p><label class="search"><span aria-hidden="true">⌕</span><input type="search" id="resource-search" aria-label="Filter resources" placeholder="Filter resources" value="${e(s.query)}"></label></div>${list.map((c) => `<button type="button" class="resource-row" data-ui="select" data-value="${e(c.id)}" aria-pressed="${selected?.id === c.id}"><span class="resource-title">${e(c.name)}<span class="resource-glyph" aria-hidden="true">${c.id === "c3" ? "▤" : "◇"}</span></span><code>${e(c.address)}</code><span class="resource-summary">${e(c.summary)}</span><span class="resource-meta">${badge(label(c.action), c.action)}<span>${e(c.rootId)} · ${e(c.risk)}</span></span></button>`).join("") || '<p class="empty">No matching resource changes. Try another root or clear the filter.</p>'}</section>${selected ? resourceDetail(r, s, selected) : '<aside class="inspector"><h2>No resource selected</h2><p class="muted">Select a root with current evidence or clear the filter. A failed root still needs a successful plan.</p></aside>'}</section>`;
 }
 function readiness(r: Review, s: UIState): string {
   return `<section class="readiness"><h3>Next decision</h3>${[

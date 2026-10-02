@@ -82,7 +82,7 @@ updates source metadata and `Review.SourceDecisions` while preserving Statecraft
 never becomes a Statecraft approval or refreshes a stale approval. Only an
 authenticated, persisted Statecraft decision can establish that binding. Source
 history stays internal until it has a distinct public API/UI; it is omitted from
-the temporary JSON review response and is not added to protobuf's approval list.
+the public Connect review response and is not added to protobuf's approval list.
 
 When an existing head changes or becomes unavailable, the review and its roots
 become `stale`. Retained changes, findings, and decisions are historical evidence;
