@@ -48,6 +48,7 @@ future entity in `architecture.md` as an implemented feature.
 | Sample assessment and action gates | `internal/adapters/mock/policies.go` |
 | Transactional demo store | `internal/adapters/mock/store.go` |
 | Source metadata refresh and invalidation | `internal/service/source_reviews.go`, `internal/domain/source_control.go` |
+| Structured RPC outcomes | `internal/adapters/connectapi/logging.go` and runtime logger composition |
 | External mappings | `internal/adapters/github/`, `internal/adapters/atlantis/` |
 | Public API schema and generation | `proto/statecraft/v1/review.proto`, `buf.yaml`, `buf.gen.yaml` |
 | Frontend contract and request/focus/session behavior | `web/src/gen/statecraft/v1/review_pb.ts`, `web/src/api.ts`, `web/src/main.ts` |

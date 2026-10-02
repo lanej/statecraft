@@ -24,9 +24,10 @@ type demoServer struct {
 
 // Handler composes only the read service and isolated demo workflow. It has no
 // source-control credentials or external planning/execution capability.
-func Handler(reviews *service.Reviews, workflow *service.DemoWorkflow, seed func(string, time.Time) (domain.Review, error)) http.Handler {
+func Handler(reviews *service.Reviews, workflow *service.DemoWorkflow, seed func(string, time.Time) (domain.Review, error), options ...connect.HandlerOption) http.Handler {
 	mux := http.NewServeMux()
 	opts := []connect.HandlerOption{connect.WithReadMaxBytes(16 * 1024)}
+	opts = append(opts, options...)
 	path, handler := statecraftv1connect.NewReviewServiceHandler(&reviewServer{reviews}, opts...)
 	mux.Handle(path, handler)
 	path, handler = statecraftv1connect.NewDemoWorkflowServiceHandler(&demoServer{workflow, seed}, opts...)

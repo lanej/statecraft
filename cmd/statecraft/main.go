@@ -2,10 +2,13 @@ package main
 
 import (
 	"log"
+	"log/slog"
 	"net"
 	"net/http"
 	"os"
 	"time"
+
+	"connectrpc.com/connect"
 
 	"github.com/lanej/statecraft/internal/adapters/connectapi"
 	"github.com/lanej/statecraft/internal/adapters/mock"
@@ -17,13 +20,14 @@ func main() {
 	reviews := service.NewReviews(store)
 	workflow := service.NewDemoWorkflow(store, mock.Planner{}, mock.Policies{}, mock.Policies{}, time.Now)
 
-	handler := connectapi.Handler(reviews, workflow, mock.SeedReview)
+	logger := slog.New(slog.NewJSONHandler(os.Stderr, nil))
+	handler := connectapi.Handler(reviews, workflow, mock.SeedReview, connect.WithInterceptors(connectapi.Logging(logger)))
 	port := os.Getenv("STATECRAFT_PORT")
 	if port == "" {
 		port = "8081"
 	}
 	address := net.JoinHostPort("127.0.0.1", port)
-	log.Printf("Statecraft mock API listening on http://%s (no live infrastructure)", address)
+	logger.Info("server.started", "address", address, "mode", "mock")
 	server := &http.Server{Addr: address, Handler: handler, ReadHeaderTimeout: 5 * time.Second}
 	log.Fatal(server.ListenAndServe())
 }
