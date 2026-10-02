@@ -15,10 +15,39 @@ evidence, identity, policy, and execution work needed to connect these adapters.
 
 ## Client choices and compatibility
 
-| System | Choice | Rationale |
+### Client selection rule
+
+All API clients follow this priority order:
+
+1. **Official SDK.** Use the provider's supported SDK when it covers the required
+   operations and is suitable for this project's language/runtime.
+2. **Generated client.** If the official SDK is unavailable or unsuitable, generate
+   the client from the provider's API specification (for example OpenAPI or
+   protobuf). Keep the specification version/provenance, pinned generator, and
+   generation command in the repository; CI must reject generated-code drift.
+3. **Documented exception.** A handwritten client is permitted only after both
+   higher-priority options have been evaluated and found unavailable or unsuitable.
+   Record the required capabilities, inspected authoritative sources/versions,
+   concrete failure of each option, bounded fallback scope, contract tests, and
+   the condition for replacing it. Convenience alone is not a justification.
+
+A community SDK is also an exception to the first two choices; do not label it
+official or silently introduce another default tier. Reuse of SDKs or generation
+does not change the adapter boundary: provider types still map into Statecraft
+models, and domain behavior remains handwritten Statecraft code. Never edit
+generated clients by hand.
+
+### Existing clients awaiting exception review
+
+These clients predate the selection rule. Their current implementation does not
+establish that the preferred options have both failed. Complete and record that
+comparison before extending their provider transport; migrate if a preferred
+option is usable.
+
+| System | Current choice | Status under the rule |
 | --- | --- | --- |
-| GitHub | `github.com/google/go-github/v92` v92.0.0 | GitHub lists this maintained Go client under third-party libraries. GitHub has no official Go REST SDK in its library catalog. Use the typed, paginated client rather than maintaining another REST implementation. It is not an official Google product either. |
-| Atlantis | A narrow `net/http` client with adapter-local DTOs | The upstream documentation and release expose no official standalone Go client. Importing Atlantis's server/controller/model packages would couple Statecraft to its server implementation. The small documented HTTP surface is the better-supported integration contract, though it remains alpha. |
+| GitHub | `github.com/google/go-github/v92` v92.0.0 | Existing community SDK; exception review pending. The inspected GitHub catalog lists it as third-party, not an official Go SDK. The API-specification/generation alternative must also be evaluated. It is not an official Google product either. |
+| Atlantis | A narrow `net/http` client with adapter-local DTOs | Existing handwritten client; exception review pending. The inspected baseline did not expose an official standalone Go client; importing server internals would couple Statecraft to the implementation. That alone does not justify handwriting: a usable API specification and generation path must also be checked. Local HTTP contract tests cover the current mapping. |
 
 GitHub's [library catalog](https://docs.github.com/en/rest/using-the-rest-api/libraries-for-the-rest-api)
 and [go-github release](https://github.com/google/go-github/releases/tag/v92.0.0)
