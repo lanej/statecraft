@@ -43,8 +43,15 @@ those documents when behavior, boundaries, or the next useful step changes.
 
 - Keep provider SDKs, wire DTOs, Rego queries, and raw engine documents inside
   adapters. Domain, ports, services, and frontend contracts use Statecraft models.
-  Prefer official clients when available; document a supported alternative when
-  none exists. Verify authoritative sources when changing external integrations.
+  External clients must follow this priority: use a suitable official SDK;
+  otherwise generate a client from the provider's API specification; handwrite a
+  client only when both options are unavailable or unsuitable. Before taking an
+  exception, document why each higher-priority option fails, the inspected
+  sources/versions, contract tests, and the condition for replacing the fallback
+  in [integration boundaries](docs/integrations.md#client-selection-rule).
+  Community SDKs are exceptions too, not official SDKs. Pin SDK/spec/generator
+  versions, keep generation reproducible, and check generated-code drift in CI.
+  Verify authoritative sources when changing external integrations.
 - An approval binds to an exact proposal and assessment, including commit and
   complete root scope. A GitHub review or editable body marker is source evidence,
   not proof of Statecraft approval. New evidence can invalidate old decisions.

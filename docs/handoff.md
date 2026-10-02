@@ -88,6 +88,10 @@ returns a conflict instead of silently replaying a decision.
 
 ## Limits that matter for the next agent
 
+- External clients now require official SDK first, API-specification generation
+  second, and documented exceptions only after both fail. The existing GitHub
+  community SDK and Atlantis handwritten client still need that exception review
+  before extending their provider transport; see the [selection rule](integrations.md#client-selection-rule).
 - `PlanSnapshot` uses review-local IDs and synthetic digests. History keeps plan
   identities/change IDs, human decisions, and simulated attempts; it does not keep
   full immutable old plans, evaluations, relationships, and evidence for replay.

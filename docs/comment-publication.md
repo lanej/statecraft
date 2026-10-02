@@ -9,7 +9,7 @@ adding another general-purpose publication interface.
 | `domain.SummarizeProposal` | Pure summary of plan revision, root completeness, policy coverage, accepted risks, approval, and verification | No: input has only Statecraft evidence and an explicit time |
 | Application composition | Projects evidence into the summary input and chooses the destination from trusted context | Yes; this is orchestration |
 | `githubadapter.RenderProposalComment` | Formats structured facts as GitHub Markdown | Yes |
-| `SourceControl.PublishProposalComment` | Calls the official SDK and records the publication receipt | Yes; SDK types remain in the integration |
+| `SourceControl.PublishProposalComment` | Calls the pinned community SDK and records the publication receipt | Yes; SDK types remain in the integration |
 
 The new capability is a concrete GitHub integration method, separate from the
 existing `SourceControl` port. A second provider or genuine substitution need can
