@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
-  renderReview,
-  initialUI,
-  currentApproval,
   currentAcceptance,
+  currentApproval,
   decisionContext,
+  initialUI,
+  renderReview,
   visibleChanges,
 } from "../src/review.ts";
 

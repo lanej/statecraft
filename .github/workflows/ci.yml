@@ -13,6 +13,7 @@ jobs:
         with:
           go-version-file: go.mod
           cache: false
+      - run: make gofmt-check
       - run: go test ./...
 
   web:
@@ -26,5 +27,26 @@ jobs:
         with:
           node-version: "22"
       - run: npm ci
+      - run: npm run check
       - run: npm test
       - run: npm run build
+
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm --prefix web ci
+      - run: make proto-lint
+      - run: make proto-breaking
+        env:
+          PROTO_BASE: origin/${{ github.base_ref || 'main' }}
+      - run: make check-generated
