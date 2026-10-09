@@ -27,13 +27,15 @@ func TestProposedChangePlanningAcceptance(t *testing.T) {
 		status                 int
 		complete, stale        bool
 		attemptStatus          string
+		recheckFails           bool
 	}{
-		{"opened proposal plans", "opened", success, 200, true, false, "succeeded"},
-		{"synchronize plans", "synchronize", success, 200, true, false, "succeeded"},
-		{"failed root retains evidence", "opened", failure, 500, false, false, "failed"},
-		{"missing root remains incomplete", "opened", missing, 200, false, false, "unknown"},
-		{"commit changes during planning", "synchronize", success, 200, false, true, "succeeded"},
-		{"discarded plans remain incomplete", "opened", discarded, 200, false, false, "succeeded"},
+		{"opened proposal plans", "opened", success, 200, true, false, "succeeded", false},
+		{"synchronize plans", "synchronize", success, 200, true, false, "succeeded", false},
+		{"failed root retains evidence", "opened", failure, 500, false, false, "failed", false},
+		{"missing root remains incomplete", "opened", missing, 200, false, false, "unknown", false},
+		{"commit changes during planning", "synchronize", success, 200, false, true, "succeeded", false},
+		{"discarded plans remain incomplete", "opened", discarded, 200, false, false, "succeeded", false},
+		{"freshness failure retains plan evidence", "opened", success, 200, false, true, "succeeded", true},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			var sourceReads, planCalls atomic.Int32
@@ -45,8 +47,15 @@ func TestProposedChangePlanningAcceptance(t *testing.T) {
 				switch r.URL.Path {
 				case "/repos/acme/infra/pulls/42":
 					head := "commit-a"
-					if sourceReads.Add(1) > 1 && tc.stale {
-						head = "commit-b"
+					if sourceReads.Add(1) > 1 {
+						if tc.recheckFails {
+							w.WriteHeader(503)
+							fmt.Fprint(w, `{"message":"source unavailable"}`)
+							return
+						}
+						if tc.stale {
+							head = "commit-b"
+						}
 					}
 					fmt.Fprintf(w, `{"number":42,"title":"Change sample infrastructure","state":"open","user":{"login":"reviewer"},"head":{"sha":%q,"ref":"feature/change"},"base":{"ref":"main"}}`, head)
 				case "/repos/acme/infra/pulls/42/files":
@@ -109,13 +118,21 @@ func TestProposedChangePlanningAcceptance(t *testing.T) {
 				t.Fatalf("ignored event status = %d", got.Code)
 			}
 			response := deliver(payload, "delivery-1", sign(payload), "pull_request")
-			if response.Code != 200 {
+			expectedStatus := 200
+			if tc.recheckFails {
+				expectedStatus = 502
+			}
+			if response.Code != expectedStatus {
 				t.Fatalf("webhook status = %d: %s", response.Code, response.Body.String())
 			}
-			var result service.ProposedPlan
-			if err := json.Unmarshal(response.Body.Bytes(), &result); err != nil {
+			var receipt httpapi.PlanningReceipt
+			if err := json.Unmarshal(response.Body.Bytes(), &receipt); err != nil {
 				t.Fatal(err)
 			}
+			if receipt.Result == nil || (tc.recheckFails && receipt.Failure == "") {
+				t.Fatalf("receipt lost result/failure: %#v", receipt)
+			}
+			result := *receipt.Result
 			if result.Complete != tc.complete || result.Stale != tc.stale || result.PlannedHeadSHA != "commit-a" {
 				t.Fatalf("proposal result = %#v", result)
 			}
@@ -131,8 +148,8 @@ func TestProposedChangePlanningAcceptance(t *testing.T) {
 			if tc.attemptStatus == "failed" && result.Run.Attempts[0].Failure != "invalid configuration" {
 				t.Fatal("failure evidence lost")
 			}
-			if got := deliver(payload, "delivery-1", sign(payload), "pull_request"); got.Code != 204 {
-				t.Fatalf("duplicate status = %d", got.Code)
+			if got := deliver(payload, "delivery-1", sign(payload), "pull_request"); got.Code != response.Code || got.Body.String() != response.Body.String() {
+				t.Fatalf("duplicate did not preserve receipt: %d %s", got.Code, got.Body.String())
 			}
 			collision := fmt.Sprintf(`{"action":"opened","number":43,"repository":{"full_name":"acme/infra"}}`)
 			if got := deliver(collision, "delivery-1", sign(collision), "pull_request"); got.Code != 409 {

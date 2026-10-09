@@ -16,7 +16,8 @@ head or base, closed PR, or unavailable source cannot establish complete plannin
 
 Covered scenarios: opened and synchronize events, successful planning, failed-root
 evidence (including Atlantis HTTP 500), missing root results, discarded plans, and
-source changes during planning. Invalid signatures are rejected before provider
+source changes during planning, and a failed freshness recheck that retains
+previously collected plan evidence. Invalid signatures are rejected before provider
 access; unrelated events are ignored. Repeated delivery IDs do not reissue plans,
 and a delivery ID reused with different content is rejected.
 
@@ -37,7 +38,10 @@ The ingress verifies HMAC-SHA256 against the raw body, limits body size, allows 
 configured repositories, and handles `opened`, `synchronize`, `reopened`, and
 `ready_for_review`. Planning is synchronous. Delivery receipts are process-local,
 limited to 4096 entries, and include failed/uncertain dispatches to prevent silent
-replay. A duplicate response acknowledges receipt, not successful planning. Restart
+replay. A duplicate returns the stored structured result/failure without dispatching
+again; a duplicate during dispatch returns a pending receipt (202). Failure
+receipts retain any collected plan evidence (502), including freshness-check
+failures. Neither a receipt nor a planning-complete flag proves policy compliance. Restart
 loses these receipts; this is not a production webhook intake guarantee.
 
 Before exposing a deployed receiver, add durable authenticated intake and operation

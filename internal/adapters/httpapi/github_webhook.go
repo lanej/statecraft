@@ -26,7 +26,28 @@ type GitHubWebhook struct {
 	planner    ProposedPlanner
 	roots      map[string][]domain.RootSelector
 	mu         sync.Mutex
-	deliveries map[string][32]byte
+	deliveries map[string]deliveryReceipt
+}
+
+// PlanningReceipt retains both command evidence and an operation failure. It is
+// available on identical redelivery without repeating the provider operation.
+type PlanningReceipt struct {
+	Delivery string                `json:"delivery"`
+	State    string                `json:"state"`
+	Result   *service.ProposedPlan `json:"result,omitempty"`
+	Failure  string                `json:"failure,omitempty"`
+}
+
+type deliveryReceipt struct {
+	digest [32]byte
+	status int
+	body   []byte
+}
+
+func writeReceipt(w http.ResponseWriter, receipt deliveryReceipt) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(receipt.status)
+	w.Write(receipt.body)
 }
 
 func NewGitHubWebhook(secret string, planner ProposedPlanner, roots map[string][]domain.RootSelector) *GitHubWebhook {
@@ -34,7 +55,7 @@ func NewGitHubWebhook(secret string, planner ProposedPlanner, roots map[string][
 	for repo, selectors := range roots {
 		configured[repo] = append([]domain.RootSelector(nil), selectors...)
 	}
-	return &GitHubWebhook{secret: []byte(secret), planner: planner, roots: configured, deliveries: make(map[string][32]byte)}
+	return &GitHubWebhook{secret: []byte(secret), planner: planner, roots: configured, deliveries: make(map[string]deliveryReceipt)}
 }
 
 func (h *GitHubWebhook) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -95,7 +116,8 @@ func (h *GitHubWebhook) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h.mu.Lock()
 	previous, duplicate := h.deliveries[delivery]
 	if !duplicate && len(h.deliveries) < 4096 {
-		h.deliveries[delivery] = digest
+		pending, _ := json.Marshal(PlanningReceipt{Delivery: delivery, State: "pending"})
+		h.deliveries[delivery] = deliveryReceipt{digest: digest, status: http.StatusAccepted, body: pending}
 	} else if !duplicate {
 		h.mu.Unlock()
 		http.Error(w, "delivery capacity reached", http.StatusServiceUnavailable)
@@ -103,19 +125,32 @@ func (h *GitHubWebhook) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	h.mu.Unlock()
 	if duplicate {
-		if previous != digest {
+		if previous.digest != digest {
 			http.Error(w, "delivery identity collision", http.StatusConflict)
 			return
 		}
-		// A failed/uncertain plan is also retained; do not silently replay it.
-		w.WriteHeader(http.StatusNoContent)
+		// Return the same evidence/failure, or pending while dispatch is in flight.
+		writeReceipt(w, previous)
 		return
 	}
 	result, err := h.planner.Plan(r.Context(), domain.RepositoryRef{Owner: parts[0], Name: parts[1]}, event.Number, roots)
+	receipt := PlanningReceipt{Delivery: delivery, State: "completed", Result: &result}
+	status := http.StatusOK
 	if err != nil {
-		http.Error(w, "planning failed; inspect service evidence before retry", http.StatusBadGateway)
-		return
+		// Provider error strings can include credentials/raw bodies. Keep a bounded
+		// failure marker alongside the retained evidence rather than exposing them.
+		receipt.State = "failed"
+		receipt.Failure = "planning or freshness check failed; reconcile retained evidence before retry"
+		status = http.StatusBadGateway
 	}
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(result)
+	body, encodeErr := json.Marshal(receipt)
+	if encodeErr != nil {
+		body = []byte(`{"state":"failed","failure":"operation receipt encoding failed"}`)
+		status = http.StatusInternalServerError
+	}
+	completed := deliveryReceipt{digest: digest, status: status, body: body}
+	h.mu.Lock()
+	h.deliveries[delivery] = completed
+	h.mu.Unlock()
+	writeReceipt(w, completed)
 }

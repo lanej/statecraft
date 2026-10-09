@@ -56,10 +56,10 @@ func (s *ProposedPlans) Plan(ctx context.Context, repo domain.RepositoryRef, num
 		Repository: repo, PullRequest: number, Ref: change.HeadSHA,
 		BaseBranch: change.BaseRef, Roots: slices.Clone(roots),
 	})
+	result.Run = run
 	if err != nil {
 		return result, fmt.Errorf("plan proposed change: %w", err)
 	}
-	result.Run = run
 	current, err := s.source.GetChange(ctx, repo, number)
 	if err != nil {
 		result.Stale = true
@@ -83,11 +83,11 @@ func completePlan(run domain.PlanRun, roots []domain.RootSelector) bool {
 	}
 	seen := make(map[string]bool, len(roots))
 	for _, attempt := range run.Attempts {
-		if !expected[attempt.RootID] || attempt.Status != "succeeded" || attempt.ErrorPresent || attempt.Failure != "" {
-			return false
-		}
 		if attempt.Phase == "policy_check" {
 			continue
+		}
+		if !expected[attempt.RootID] || attempt.Status != "succeeded" || attempt.ErrorPresent || attempt.Failure != "" {
+			return false
 		}
 		if attempt.Phase != "plan" || seen[attempt.RootID] {
 			return false
