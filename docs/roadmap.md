@@ -49,7 +49,9 @@ error behavior. The mock workflow remains isolated from external execution.
 
 ### R2 — Durable proposal and evidence model (next)
 
-Design the ingestion contract and storage port before choosing persistence details.
+The [ingestion and storage-port design](evidence-ingestion.md) is defined; its
+implementation and durable adapter remain open. Implement the pure identity/ordering
+reducer and storage contract tests before choosing persistence details.
 Capture repository, source change, commit, expected roots, root attempt identity,
 exact plan artifacts/digests, structured plan JSON, logs, timestamps, and provenance.
 Normalize typed changes and relationships; distinguish unknown, redacted, absent,

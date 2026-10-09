@@ -53,6 +53,13 @@ Violating an invariant requires an explicit architecture decision recorded here
 with the reason, scope, and intended removal or replacement. Convenience alone is
 not sufficient.
 
+### Durable evidence design
+
+The [R2 ingestion contract](evidence-ingestion.md) defines immutable records,
+canonical PlanSet identity, ordering and idempotency, typed normalization, proposed
+storage ports, access/retention, and replay acceptance cases. These are designed
+capabilities; the current mock store and runtime have not been migrated.
+
 ### Current outbound ports
 
 ```text
