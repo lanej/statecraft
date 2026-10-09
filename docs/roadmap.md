@@ -70,6 +70,9 @@ freshness and provenance from those records.
 Configure GitHub App installation and user identity behind existing boundaries.
 Add repository access and root discovery, authenticated/replay-resistant webhook
 intake, source refresh, and reviewer capabilities from trusted backend context.
+Read base-branch CODEOWNERS, resolve affected-path/root owners and current team/access
+evidence, and capture effective review requirements as specified in the
+[ownership contract](evidence-ingestion.md#code-ownership-and-reviewer-requirements).
 Persist actor/role evidence and human decisions. Keep external GitHub review history
 distinct from authoritative Statecraft plan approval; define reliable publication
 of checks and human review results with explicit synchronization failures.

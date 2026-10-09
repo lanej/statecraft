@@ -30,6 +30,7 @@ display and adapter routing. A repository rename must not change historical iden
 | Record | Required binding and content |
 | --- | --- |
 | Source revision | Tenant, repository, stable source-change ID, head commit, base commit/ref, source observation evidence, server-assigned review version. A new authoritative observation can invalidate eligibility without deleting a prior proposal. |
+| Ownership snapshot | Exact base-branch CODEOWNERS evidence (or verified absence), base commit, changed-path set, resolver version, matched rule locations, resolved principal IDs, membership/access observations, and effective reviewer-requirement configuration digest. |
 | Planning generation | Server-issued ID and monotonic sequence within the review; source revision; trusted root-discovery/configuration digest; complete, sorted expected root IDs; creation time and producer configuration. Replanning creates a new generation even at the same commit. |
 | Root attempt | Server-issued ID, generation/root binding, ordinal within the root, execution-system operation correlation, producer identity, start/end observations, immutable event sequence and evidence references. A retry creates a new attempt. |
 | Artifact | Tenant-scoped opaque evidence ID, kind, SHA-256 of exact decoded bytes, byte length, media type, capture time, verified producer/operation binding, engine/version, access classification and retention class. Storage locations stay adapter-private. |
@@ -139,6 +140,50 @@ Webhook payload order is not source authority. No historical successful attempt
 may fill a missing root in a newer generation automatically. Evidence reuse, if
 added later, needs a separate validated binding and explicit provenance.
 
+## Code ownership and reviewer requirements
+
+Capture code ownership alongside source evidence. The GitHub adapter reads the
+selected CODEOWNERS file at an exact base-branch commit, using the documented
+location precedence (`.github/`, repository root, then `docs/`). Head-branch changes
+to CODEOWNERS are proposed changes, not authority to relax their own review.
+Retain exact bytes, file path, commit and digest, or an explicit verified absence.
+Use GitHub-compatible, case-sensitive matching with the last matching rule taking
+precedence; retain parser diagnostics and matched line locations. Do not substitute
+an ordinary gitignore matcher. See [GitHub's CODEOWNERS contract](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners).
+
+Resolve ownership for the complete changed-path set and persist the path-to-owner
+mapping. Renames/deletions retain both old and new path evidence. Statecraft's
+initial policy conservatively resolves both paths for renames, and the old path
+for deletions; record that policy separately from GitHub's observed merge gate.
+For root-level reviewers, include the source files/modules known to affect each
+root, with explicit dependency-mapping coverage. Directory ownership alone cannot
+prove coverage when a root depends on a shared module elsewhere. Missing provenance
+cannot silently become an unowned resource.
+
+Normalize users/teams to stable source-host principal IDs, retaining display names.
+Membership and repository access are time-varying trusted observations with their
+own versions/timestamps; refresh them before recording a qualifying decision.
+An unresolved team, insufficient access or an unreadable/invalid ownership file
+is a diagnostic, never evidence that owner review is unnecessary. Verified absence,
+an intentional ownerless rule and an unmatched path are distinct known outcomes;
+trusted workflow configuration specifies their fallback reviewer requirement.
+
+Ownership identifies reviewers; effective branch protection/rulesets and
+Statecraft policy determine whether their approval is required. Store each
+requirement's scope, source and satisfaction rule explicitly. GitHub permits any
+listed qualifying owner to satisfy an owner-review requirement; additional
+independent role approvals require an explicit Statecraft rule, not an invented
+AND across every name. GitHub merge requirements and Statecraft PlanSet decisions
+remain separate, with separate evidence of satisfaction.
+
+Bind the ownership snapshot, path/root mapping, membership/access observations and
+requirement configuration to the action-policy input digest, rather than adding
+mutable reviewer requirements to PlanSet identity. Append snapshots through a
+version-checked `RecordReviewRequirements` ledger operation. A change reevaluates
+eligibility, preserves earlier decisions, and requires renewed review where the
+current rules demand it. CODEOWNERS never grants violation-acceptance authority,
+production access or permission to apply by itself.
+
 ## Normalized value and relationship contract
 
 Provider JSON remains restricted evidence. The domain projection records a typed
@@ -175,6 +220,8 @@ EvidenceObjects
 ProposalLedger
   RecordSourceRevision(scope, expectedReviewVersion, sourceObservation)
     -> revision, reviewVersion
+  RecordReviewRequirements(scope, expectedReviewVersion, ownershipSnapshot, requirements)
+    -> requirementsReceipt, reviewVersion
   BeginGeneration(scope, expectedReviewVersion, sourceRevision, rootScope)
     -> generation, reviewVersion
   BeginAttempt(scope, expectedReviewVersion, generationID, rootID, operationIntent)
@@ -257,6 +304,9 @@ R2 remains incomplete until a durable adapter passes restart/replay checks.
   ledger commit; restart yields either an orphan or a consistent committed record.
 - Normalization: unknown, redacted, absent, null, large numbers, replacement order,
   unresolved edges and unsupported formats remain distinguishable.
+- Ownership: base/head divergence, precedence and last-match rules, ownerless/unmatched
+  paths, renames/deletions, shared modules, unavailable ownership evidence, team/access
+  changes and revised requirements preserve coverage and invalidate stale eligibility.
 - Isolation/retention: cross-tenant references fail, raw evidence stays restricted,
   and expired/missing bytes produce honest unavailable replay.
 - Restart a durable adapter, load two complete historical proposals and their
