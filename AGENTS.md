@@ -33,9 +33,9 @@ those documents when behavior, boundaries, or the next useful step changes.
   `app.js`, `styles.css`, and `fixtures/` are the older static prototype.
 - `cmd/statecraft` composes an isolated mock workflow. It does not invoke the live
   GitHub/Atlantis adapters. Keep the simulation explicit and separately composed.
-- The runtime uses a temporary JSON bridge. Protobuf and Buf configuration exist;
-  Connect handlers/clients are not generated or wired yet. Until that migration,
-  keep Go JSON, protobuf, and `web/src/contracts.ts` aligned.
+- The runtime uses generated Connect handlers and a generated TypeScript client.
+  Map domain values only in `internal/adapters/connectapi`; public message shapes
+  come from `proto/statecraft/v1/review.proto`. See [transport](docs/transport.md).
 - Demo identities, plan digests, policies, evidence, execution, and verification
   are synthetic. Do not present them as production authorization or real results.
 
@@ -43,8 +43,15 @@ those documents when behavior, boundaries, or the next useful step changes.
 
 - Keep provider SDKs, wire DTOs, Rego queries, and raw engine documents inside
   adapters. Domain, ports, services, and frontend contracts use Statecraft models.
-  Prefer official clients when available; document a supported alternative when
-  none exists. Verify authoritative sources when changing external integrations.
+  External clients must follow this priority: use a suitable official SDK;
+  otherwise generate a client from the provider's API specification; handwrite a
+  client only when both options are unavailable or unsuitable. Before taking an
+  exception, document why each higher-priority option fails, the inspected
+  sources/versions, contract tests, and the condition for replacing the fallback
+  in [integration boundaries](docs/integrations.md#client-selection-rule).
+  Community SDKs are exceptions too, not official SDKs. Pin SDK/spec/generator
+  versions, keep generation reproducible, and check generated-code drift in CI.
+  Verify authoritative sources when changing external integrations.
 - An approval binds to an exact proposal and assessment, including commit and
   complete root scope. A GitHub review or editable body marker is source evidence,
   not proof of Statecraft approval. New evidence can invalidate old decisions.
@@ -67,7 +74,7 @@ those documents when behavior, boundaries, or the next useful step changes.
 
 ## Development and verification
 
-Prerequisites: Go 1.26+, Node.js 22.6+, npm; Buf for protobuf work. Use the versions
+Prerequisites: Go 1.26+, Node.js 22.6+, npm. Buf and generators are pinned locally. Use the versions
 in `go.mod` and `web/package-lock.json` when checking compatibility.
 
 ```sh
@@ -86,20 +93,24 @@ Do not stop an unrelated process to free a port. Sessions disappear on API resta
 Choose checks for the affected boundary:
 
 ```sh
+make check-format
 go test ./...
 # Use the race detector for store/concurrency changes.
 go test -race ./...
 npm --prefix web test
 npm --prefix web run build
 # For protobuf changes:
-buf lint
-buf breaking --against '.git#branch=main'
+make proto-lint
+make proto-breaking PROTO_BASE=main
+make check-generated
 ```
 
 Use the actual target/base ref for the breaking comparison if it differs from
-local `main`. `make generate` invokes Buf, but generated runtime wiring is still a
-roadmap task. Do not hand-author generated files. Existing CI runs Go tests and
-frontend tests/build; it does not provide browser or production-integration proof.
+local `main`. `make generate` uses pinned local Go tools and npm-installed Buf/ES.
+Do not hand-author generated files or format TypeScript output with Biome.
+`make format` fixes gofmt and frontend Biome findings. CI rejects gofmt/Biome
+violations, schema lint/breaking changes, and generated-code drift, alongside Go
+and frontend tests/build. These checks do not prove production integration.
 
 For workflow changes, exercise the relevant scenarios in the running UI, including
 the blocked/recovery path. Check keyboard focus, narrow layout, loading/error

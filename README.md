@@ -4,7 +4,7 @@
 
 Statecraft is an experimental workbench for infrastructure changes attached to GitHub pull requests. It is intended to become the primary place to work a change from planning through verification: understand what will happen across multiple infrastructure roots, investigate the dependency graph, assess policy and operational risk, diagnose Atlantis failures, collaborate with reviewers, and approve the exact plan being applied.
 
-> **Status:** early prototype. The TypeScript → Go workbench supports mock planning, resource inspection, policy acceptance, approval, apply, and verification. GitHub and Atlantis-native-HTTP adapters exist but are not wired into the runtime. Durable plan evidence/history, Connect-generated handlers, GitHub App authentication, and authenticated approval flows remain to be implemented.
+> **Status:** early prototype. The TypeScript → Go workbench supports mock planning, resource inspection, policy acceptance, approval, apply, and verification. GitHub and Atlantis-native-HTTP adapters exist but are not wired into the runtime. The browser and Go API use generated Connect bindings. Durable plan evidence/history, GitHub App authentication, and authenticated approval flows remain to be implemented.
 
 **[Open the legacy prototype](https://lanej.io/infra-review/)** · **[Product definition](./docs/product.md)** · **[Architecture](./docs/architecture.md)** · **[Integrations](./docs/integrations.md)** · **[Policy design](./docs/policies.md)**
 
@@ -13,7 +13,7 @@ Statecraft is an experimental workbench for infrastructure changes attached to G
 Start with [AGENTS.md](./AGENTS.md) and the [agent handoff](./docs/handoff.md).
 The [roadmap](./docs/roadmap.md) records implemented features, required capabilities,
 dependencies, completion criteria, and open decisions. The recommended next slice
-is generated Connect transport while preserving the current mock workflow.
+is the durable proposal/evidence ingestion contract (R2).
 
 Product intent lives in [docs/product.md](./docs/product.md); interaction and visual
 rules live in [DESIGN.md](./DESIGN.md). The current app is `web/` plus the Go API.
@@ -188,6 +188,7 @@ apply recovery. All decisions and execution are simulated; no credentials are
 required. See [docs/steel-thread.md](./docs/steel-thread.md).
 
 The protobuf/Connect contract lives in `proto/statecraft/v1/review.proto`.
-Run `make generate` with Buf installed to generate Go and TypeScript bindings;
-the runnable thread retains a temporary JSON bridge until those generated handlers
-are committed.
+After `npm --prefix web ci`, run `make generate` to regenerate the checked-in Go
+and TypeScript bindings with pinned local tools. `make check-format` enforces gofmt
+and Biome; `make check-generated` detects generated-code drift. See
+[the RPC contract](docs/transport.md) for routes, errors, and compatibility checks.

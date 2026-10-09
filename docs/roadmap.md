@@ -10,7 +10,9 @@ that the current mock runtime is production ready.
 
 The [mock workbench](steel-thread.md) is implemented: multi-root inspection, policy
 violation acceptance, plan approval, simulated execution/verification, and recovery
-scenarios. GitHub and Atlantis adapters have local contract tests and remain outside
+scenarios. Generated Connect handlers/client replace the temporary JSON bridge;
+gofmt, Biome, schema compatibility, and reproducible generation are checked in CI.
+GitHub and Atlantis adapters have local contract tests and remain outside
 the executable. Policy ports exist; an OPA adapter does not. The
 [handoff](handoff.md) maps the implementation and its limitations.
 
@@ -25,7 +27,7 @@ not mount a production webhook receiver or enable live planning in the demo.
 | Review and root discovery | One synthetic source change; four seeded roots | Repository onboarding and source-change list; explicit complete expected root scope from configured source/execution context. R2/R3 |
 | Plan evidence and semantic changes | Display strings and synthetic artifacts | Durable exact artifacts, typed before/after values, unknown/sensitive values, stable resource identity, versioned normalization and provenance. R2 |
 | Decision workspace | Five views, resource inspector, filtering, connected-resource links | Consistent evidence navigation, actionable missing context, large-plan investigation, accessible loading/error/recovery behavior. R2/R6 |
-| API contract | Protobuf plus handwritten JSON/TS | Generated Connect client/handler boundary with reproducible generation and compatibility checks. R1 |
+| API contract | Generated Connect client/handler boundary, pinned local generators, format/schema/drift checks | R1 implemented; evolve the schema with evidence ingestion. |
 | Assessment | Two deterministic mock rules | Versioned OPA evaluation with complete expected coverage and explicit indeterminate results. R4 |
 | Violation acceptance | Request/grant, fixed personas, one-hour expiry | Authorized request/grant/deny/revoke, policy-specific conditions, scope, evidence, expiry and audit history; hard prohibitions remain hard. R3/R4 |
 | Human review | Demo approve/request changes bound to plan/head/assessment | Authenticated reviewers, required reviewers/roles, separation of duties where configured, stale/conflicting decision handling, and source synchronization without invented approvals. R3/R4 |
@@ -40,23 +42,16 @@ not mount a production webhook receiver or enable live planning in the demo.
 
 ## Delivery sequence
 
-### R1 — Replace the temporary transport (next)
+### R1 — Generated transport (implemented)
 
-Keep the mock workflow and its interaction semantics. Generate Go/Connect and
-TypeScript bindings from protobuf; map domain values at the transport boundary and
-use the generated client in `web/`. Pin generator versions and document a repeatable
-regeneration command. Define error mapping for invalid input, denied action,
-missing review, stale version, and unavailable service.
+The browser uses generated RPCs for create/read/action; the original read-only
+fixture is available through `ReviewService.GetReview`. Domain mapping remains
+inside the transport adapter; the old JSON routes and handwritten TS contract are
+removed. Local generator versions are pinned and CI checks regeneration, schema
+compatibility, gofmt, and Biome. See [transport](transport.md) for the contract and
+error behavior. The mock workflow remains isolated from external execution.
 
-Complete when the running browser uses generated RPCs for create/read/action,
-provider types remain in adapters, equivalent server-side gates still hold,
-contract regeneration is reproducible, and the temporary routes/handwritten TS
-contract are removed or have an explicit, bounded migration consumer. Preserve the
-original fixture path's intent until its caller is migrated. Verify the workflow
-and failure behavior through the new transport. Do not wire production adapters as
-part of this slice.
-
-### R2 — Durable proposal and evidence model
+### R2 — Durable proposal and evidence model (next)
 
 Design the ingestion contract and storage port before choosing persistence details.
 Capture repository, source change, commit, expected roots, root attempt identity,

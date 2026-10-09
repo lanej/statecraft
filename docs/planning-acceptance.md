@@ -47,5 +47,6 @@ silently repeat an uncertain operation. Pin the Atlantis version and validate th
 mock response fixtures against that version before claiming live compatibility.
 Structured plan JSON/artifact ingestion remains a separate delivery step.
 
-Generated Connect transport remains the next transport task; this suite provides
-an integration seam that can be retained as that work and durable ingestion proceed.
+Generated Connect transport is implemented in the mock runtime. This harness
+remains independently composed; the next task is the durable proposal/evidence
+ingestion contract (R2), including receipt retention and replay-safe publication.
