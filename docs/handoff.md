@@ -1,9 +1,7 @@
 # Agent handoff
 
-This describes the review-workbench implementation introduced in
-[PR #7](https://github.com/lanej/statecraft/pull/7), following the adapter foundation
-and policy design. Check the current checkout and PR state before using that link
-as a statement about `main`; this document describes code, not merge status.
+This describes the mock workbench and separate read-only platform-infra runtime.
+Check the current checkout and PR state before inferring merge or deployment status.
 
 ## Read and decide
 
@@ -23,6 +21,10 @@ its ports and persistence are not implemented. Start with the pure reducer and
 contract tests. Preserve the current mock composition. User feedback on the
 workbench can be addressed independently; do not treat the current composition as a frozen design.
 
+The read-only runtime uses real GitHub source evidence when configured.
+Its [runbook](read-only-deployment.md) covers platform-infra resources, IAP, credentials, and staged deployment.
+Live availability requires deployed-revision and authenticated-browser verification.
+
 ## Current baseline
 
 | Area | What exists | What it does not establish |
@@ -31,8 +33,9 @@ workbench can be addressed independently; do not treat the current composition a
 | Workflow | Plan, request changes, request/grant acceptance, approve, apply, verify | Authentication, real role separation, persistent jobs, or production execution |
 | Policy | `PolicyEvaluator` and `ActionPolicy` ports with deterministic sample rules | OPA/Rego evaluation, trusted policy distribution, reference-data/input digests, revocation, or organization policy administration |
 | Store | Isolated in-memory sessions; transactional expected-version mutation; detached reads | Durable storage, restart recovery, retention, tenant isolation, or a production audit store |
-| Integration adapters | GitHub reads/reviews/checks; Atlantis command mapping and notification decoding; local HTTP contract tests | Runtime credentials, configured installations, authenticated webhook ingress, reconciliation, or exact-artifact apply |
-| API | Generated Connect handler/client, domain mapping, pinned local generation, contract and format CI checks | Authentication, deployed service, or real evidence ingestion |
+| Original integration adapters | GitHub reads/reviews/checks; Atlantis command mapping and notification decoding; local HTTP contract tests | Runtime composition, configured installations, authenticated webhook ingress, reconciliation, or exact-artifact apply |
+| Read-only runtime | Fixed-repository GitHub reader, source patches/reviews/checks/statuses, signed IAP assertion validation, separate executable | Plans, complete root scope, policy authorization, decisions, actions, persistence, or verified deployment |
+| API | Generated Connect handler/client, separate source-evidence service, pinned local generation | Durable evidence ingestion or production workflow authorization |
 
 GitHub/Atlantis/OPA types do not define the frontend or domain. Initial sample
 models deliberately cover less than the target architecture; do not read every
@@ -53,6 +56,10 @@ remain required before deployment.
 | Change you need to make | Start here |
 | --- | --- |
 | Runtime composition and listen address | `cmd/statecraft/main.go` |
+| Read-only composition and deployment | `cmd/statecraft-readonly/main.go`, [runbook](read-only-deployment.md) |
+| Read-only HTTP surface | `internal/adapters/readruntime/handler.go` |
+| Read-only GitHub evidence and IAP | `internal/adapters/githubread/`, `internal/adapters/iap/` |
+| Read-only transport and UI | `internal/adapters/connectapi/source_evidence.go`, `web/src/source.ts`, `web/src/source.css` |
 | Demo HTTP routes, decoding, error mapping | `internal/adapters/connectapi/reviews.go`, `mapping.go`, and their tests |
 | Workflow transitions and command-time revalidation | `internal/service/demo_workflow.go` and its test |
 | Review, evidence, decision, and acceptance shapes | `internal/domain/review.go`, `internal/domain/workflow.go` |
@@ -68,18 +75,21 @@ remain required before deployment.
 | Frontend contract and request/focus/session behavior | `web/src/gen/statecraft/v1/review_pb.ts`, `web/src/api.ts`, `web/src/main.ts` |
 | View composition and presentation logic | `web/src/review.ts`, `web/src/style.css` |
 | Frontend rendering regressions | `web/test/review.test.mjs` |
-| Actual running-UI examples | `docs/screenshots/` |
+| Read-only browser regressions | `web/browser/source.spec.ts`, `web/playwright.config.ts` |
+| Actual running-UI examples | `docs/screenshots/`; private source captures in platform-infra's `docs/statecraft/screenshots/` |
 | Legacy static composition checks | `.ui-review/config.json`, `.ui-review/rules.json` — target root-level prototype only |
 
 The frontend is plain TypeScript with HTML render functions, not a component
 framework. Refactor when a use case warrants it; a framework migration is not a
-prerequisite for the next feature. The raw source/plan strings are illustrative
-fixtures, not parsed or executable infrastructure configuration.
+prerequisite for the next feature. The mock source/plan strings remain illustrative fixtures.
+The read-only view instead displays GitHub patches, with omission/truncation warnings.
 
 ## Run and exercise
 
 Use the commands in [AGENTS.md](../AGENTS.md) and the HTTP routes/port options in
-[steel-thread.md](steel-thread.md). The current app creates a session through the
+[steel-thread.md](steel-thread.md) for the mock workbench.
+Use [read-only deployment](read-only-deployment.md) for the real-source runtime.
+The mock app creates a session through the
 backend rather than importing frontend fixture JSON. Session identity lives in
 per-tab browser storage; reset/scenario selection creates another session. The
 API caps the store at 512 sessions and a restart clears them.
@@ -104,7 +114,8 @@ returns a conflict instead of silently replaying a decision.
 - External clients now require official SDK first, API-specification generation
   second, and documented exceptions only after both fail. The existing GitHub
   community SDK and Atlantis handwritten client still need that exception review
-  before extending their provider transport; see the [selection rule](integrations.md#client-selection-rule).
+  before extending their provider transport. The separate read-only reader uses
+  GitHub's pinned official specification; see the [selection rule](integrations.md#client-selection-rule).
 - `PlanSnapshot` uses review-local IDs and synthetic digests. History keeps plan
   identities/change IDs, human decisions, and simulated attempts; it does not keep
   full immutable old plans, evaluations, relationships, and evidence for replay.
@@ -120,8 +131,13 @@ returns a conflict instead of silently replaying a decision.
   that precision; use protobuf equality instead of `JSON.stringify` on reviews.
   Regenerate rather than editing `gen/` or `web/src/gen/`. See [transport](transport.md).
 - Current tests exercise domain/service behavior, provider mapping, HTTP validation,
-  and rendered HTML. Browser walkthroughs/screenshots exist, but there is no
-  automated end-to-end browser suite or comprehensive accessibility verification.
+  and rendered HTML. CI configures Playwright 1.62.1 source-view regressions using isolated API fixtures.
+  They cover disclosure/focus, failed-refresh evidence retention/recovery, and narrow long-patch layout.
+  Full decision-workflow, SSO, and comprehensive accessibility coverage remain open.
+- Local real-source checks inspected platform-infra PR #253, including recovery and desktop/mobile layouts.
+  Source screenshots remain in private platform-infra's `docs/statecraft/screenshots/`.
+  The public bad-credential screenshot contains no private source data.
+  These validate the local read-only UI; deployed GCP/IAP access remains unverified.
 - The `.ui-review` selectors and comparison counts describe the older nine-resource
   static prototype, not the four-change workbench. They must be migrated before
   claiming that tool validates this UI.

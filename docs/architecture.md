@@ -63,6 +63,10 @@ capabilities; the current mock store and runtime have not been migrated.
 ### Current outbound ports
 
 ```text
+SourceEvidenceReader (separate read-only runtime)
+  ListChanges
+  GetSourceEvidence
+
 SourceControl
   GetChange
   ListChangedFiles
@@ -267,9 +271,9 @@ Source-control reviews are separate `ExternalReviewDecision` history in
 `Review.SourceDecisions`. Refreshing that history preserves Statecraft's own
 decisions. A source review's commit or editable body cannot establish an
 authoritative PlanSet approval; an authenticated persisted decision is required.
-The Connect transport exposes only Statecraft decisions through the generated
-protobuf contract; source history remains internal. Domain-to-message mapping
-lives in `internal/adapters/connectapi`, not in the domain or services.
+The Connect review response exposes only Statecraft decisions.
+The separate source-evidence service exposes GitHub reviews as distinct external observations.
+Domain-to-message mapping lives in `internal/adapters/connectapi`, outside domain and services.
 
 A change to an existing review's head marks the review and roots stale while
 retaining earlier evidence and decisions as history. Metadata refresh does not

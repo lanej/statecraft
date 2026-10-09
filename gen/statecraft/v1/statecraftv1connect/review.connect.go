@@ -21,6 +21,8 @@ import (
 const _ = connect.IsAtLeastVersion1_13_0
 
 const (
+	// SourceEvidenceServiceName is the fully-qualified name of the SourceEvidenceService service.
+	SourceEvidenceServiceName = "statecraft.v1.SourceEvidenceService"
 	// ReviewServiceName is the fully-qualified name of the ReviewService service.
 	ReviewServiceName = "statecraft.v1.ReviewService"
 	// DemoWorkflowServiceName is the fully-qualified name of the DemoWorkflowService service.
@@ -35,6 +37,12 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
+	// SourceEvidenceServiceListChangesProcedure is the fully-qualified name of the
+	// SourceEvidenceService's ListChanges RPC.
+	SourceEvidenceServiceListChangesProcedure = "/statecraft.v1.SourceEvidenceService/ListChanges"
+	// SourceEvidenceServiceGetSourceEvidenceProcedure is the fully-qualified name of the
+	// SourceEvidenceService's GetSourceEvidence RPC.
+	SourceEvidenceServiceGetSourceEvidenceProcedure = "/statecraft.v1.SourceEvidenceService/GetSourceEvidence"
 	// ReviewServiceGetReviewProcedure is the fully-qualified name of the ReviewService's GetReview RPC.
 	ReviewServiceGetReviewProcedure = "/statecraft.v1.ReviewService/GetReview"
 	// DemoWorkflowServiceCreateDemoProcedure is the fully-qualified name of the DemoWorkflowService's
@@ -47,6 +55,103 @@ const (
 	// ActOnDemo RPC.
 	DemoWorkflowServiceActOnDemoProcedure = "/statecraft.v1.DemoWorkflowService/ActOnDemo"
 )
+
+// SourceEvidenceServiceClient is a client for the statecraft.v1.SourceEvidenceService service.
+type SourceEvidenceServiceClient interface {
+	ListChanges(context.Context, *connect.Request[v1.ListChangesRequest]) (*connect.Response[v1.ListChangesResponse], error)
+	GetSourceEvidence(context.Context, *connect.Request[v1.GetSourceEvidenceRequest]) (*connect.Response[v1.GetSourceEvidenceResponse], error)
+}
+
+// NewSourceEvidenceServiceClient constructs a client for the statecraft.v1.SourceEvidenceService
+// service. By default, it uses the Connect protocol with the binary Protobuf Codec, asks for
+// gzipped responses, and sends uncompressed requests. To use the gRPC or gRPC-Web protocols, supply
+// the connect.WithGRPC() or connect.WithGRPCWeb() options.
+//
+// The URL supplied here should be the base URL for the Connect or gRPC server (for example,
+// http://api.acme.com or https://acme.com/grpc).
+func NewSourceEvidenceServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) SourceEvidenceServiceClient {
+	baseURL = strings.TrimRight(baseURL, "/")
+	sourceEvidenceServiceMethods := v1.File_statecraft_v1_review_proto.Services().ByName("SourceEvidenceService").Methods()
+	return &sourceEvidenceServiceClient{
+		listChanges: connect.NewClient[v1.ListChangesRequest, v1.ListChangesResponse](
+			httpClient,
+			baseURL+SourceEvidenceServiceListChangesProcedure,
+			connect.WithSchema(sourceEvidenceServiceMethods.ByName("ListChanges")),
+			connect.WithClientOptions(opts...),
+		),
+		getSourceEvidence: connect.NewClient[v1.GetSourceEvidenceRequest, v1.GetSourceEvidenceResponse](
+			httpClient,
+			baseURL+SourceEvidenceServiceGetSourceEvidenceProcedure,
+			connect.WithSchema(sourceEvidenceServiceMethods.ByName("GetSourceEvidence")),
+			connect.WithClientOptions(opts...),
+		),
+	}
+}
+
+// sourceEvidenceServiceClient implements SourceEvidenceServiceClient.
+type sourceEvidenceServiceClient struct {
+	listChanges       *connect.Client[v1.ListChangesRequest, v1.ListChangesResponse]
+	getSourceEvidence *connect.Client[v1.GetSourceEvidenceRequest, v1.GetSourceEvidenceResponse]
+}
+
+// ListChanges calls statecraft.v1.SourceEvidenceService.ListChanges.
+func (c *sourceEvidenceServiceClient) ListChanges(ctx context.Context, req *connect.Request[v1.ListChangesRequest]) (*connect.Response[v1.ListChangesResponse], error) {
+	return c.listChanges.CallUnary(ctx, req)
+}
+
+// GetSourceEvidence calls statecraft.v1.SourceEvidenceService.GetSourceEvidence.
+func (c *sourceEvidenceServiceClient) GetSourceEvidence(ctx context.Context, req *connect.Request[v1.GetSourceEvidenceRequest]) (*connect.Response[v1.GetSourceEvidenceResponse], error) {
+	return c.getSourceEvidence.CallUnary(ctx, req)
+}
+
+// SourceEvidenceServiceHandler is an implementation of the statecraft.v1.SourceEvidenceService
+// service.
+type SourceEvidenceServiceHandler interface {
+	ListChanges(context.Context, *connect.Request[v1.ListChangesRequest]) (*connect.Response[v1.ListChangesResponse], error)
+	GetSourceEvidence(context.Context, *connect.Request[v1.GetSourceEvidenceRequest]) (*connect.Response[v1.GetSourceEvidenceResponse], error)
+}
+
+// NewSourceEvidenceServiceHandler builds an HTTP handler from the service implementation. It
+// returns the path on which to mount the handler and the handler itself.
+//
+// By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
+// and JSON codecs. They also support gzip compression.
+func NewSourceEvidenceServiceHandler(svc SourceEvidenceServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	sourceEvidenceServiceMethods := v1.File_statecraft_v1_review_proto.Services().ByName("SourceEvidenceService").Methods()
+	sourceEvidenceServiceListChangesHandler := connect.NewUnaryHandler(
+		SourceEvidenceServiceListChangesProcedure,
+		svc.ListChanges,
+		connect.WithSchema(sourceEvidenceServiceMethods.ByName("ListChanges")),
+		connect.WithHandlerOptions(opts...),
+	)
+	sourceEvidenceServiceGetSourceEvidenceHandler := connect.NewUnaryHandler(
+		SourceEvidenceServiceGetSourceEvidenceProcedure,
+		svc.GetSourceEvidence,
+		connect.WithSchema(sourceEvidenceServiceMethods.ByName("GetSourceEvidence")),
+		connect.WithHandlerOptions(opts...),
+	)
+	return "/statecraft.v1.SourceEvidenceService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case SourceEvidenceServiceListChangesProcedure:
+			sourceEvidenceServiceListChangesHandler.ServeHTTP(w, r)
+		case SourceEvidenceServiceGetSourceEvidenceProcedure:
+			sourceEvidenceServiceGetSourceEvidenceHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
+}
+
+// UnimplementedSourceEvidenceServiceHandler returns CodeUnimplemented from all methods.
+type UnimplementedSourceEvidenceServiceHandler struct{}
+
+func (UnimplementedSourceEvidenceServiceHandler) ListChanges(context.Context, *connect.Request[v1.ListChangesRequest]) (*connect.Response[v1.ListChangesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("statecraft.v1.SourceEvidenceService.ListChanges is not implemented"))
+}
+
+func (UnimplementedSourceEvidenceServiceHandler) GetSourceEvidence(context.Context, *connect.Request[v1.GetSourceEvidenceRequest]) (*connect.Response[v1.GetSourceEvidenceResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("statecraft.v1.SourceEvidenceService.GetSourceEvidence is not implemented"))
+}
 
 // ReviewServiceClient is a client for the statecraft.v1.ReviewService service.
 type ReviewServiceClient interface {

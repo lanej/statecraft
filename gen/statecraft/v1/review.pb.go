@@ -21,6 +21,590 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type ListChangesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListChangesRequest) Reset() {
+	*x = ListChangesRequest{}
+	mi := &file_statecraft_v1_review_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListChangesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListChangesRequest) ProtoMessage() {}
+
+func (x *ListChangesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_statecraft_v1_review_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListChangesRequest.ProtoReflect.Descriptor instead.
+func (*ListChangesRequest) Descriptor() ([]byte, []int) {
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{0}
+}
+
+type ListChangesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Repository    string                 `protobuf:"bytes,1,opt,name=repository,proto3" json:"repository,omitempty"`
+	SourceChanges []*SourceChange        `protobuf:"bytes,2,rep,name=source_changes,json=sourceChanges,proto3" json:"source_changes,omitempty"`
+	Truncated     bool                   `protobuf:"varint,3,opt,name=truncated,proto3" json:"truncated,omitempty"`
+	CapturedAt    string                 `protobuf:"bytes,4,opt,name=captured_at,json=capturedAt,proto3" json:"captured_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListChangesResponse) Reset() {
+	*x = ListChangesResponse{}
+	mi := &file_statecraft_v1_review_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListChangesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListChangesResponse) ProtoMessage() {}
+
+func (x *ListChangesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_statecraft_v1_review_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListChangesResponse.ProtoReflect.Descriptor instead.
+func (*ListChangesResponse) Descriptor() ([]byte, []int) {
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ListChangesResponse) GetRepository() string {
+	if x != nil {
+		return x.Repository
+	}
+	return ""
+}
+
+func (x *ListChangesResponse) GetSourceChanges() []*SourceChange {
+	if x != nil {
+		return x.SourceChanges
+	}
+	return nil
+}
+
+func (x *ListChangesResponse) GetTruncated() bool {
+	if x != nil {
+		return x.Truncated
+	}
+	return false
+}
+
+func (x *ListChangesResponse) GetCapturedAt() string {
+	if x != nil {
+		return x.CapturedAt
+	}
+	return ""
+}
+
+type GetSourceEvidenceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PullRequest   int64                  `protobuf:"varint,1,opt,name=pull_request,json=pullRequest,proto3" json:"pull_request,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSourceEvidenceRequest) Reset() {
+	*x = GetSourceEvidenceRequest{}
+	mi := &file_statecraft_v1_review_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSourceEvidenceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSourceEvidenceRequest) ProtoMessage() {}
+
+func (x *GetSourceEvidenceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_statecraft_v1_review_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSourceEvidenceRequest.ProtoReflect.Descriptor instead.
+func (*GetSourceEvidenceRequest) Descriptor() ([]byte, []int) {
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetSourceEvidenceRequest) GetPullRequest() int64 {
+	if x != nil {
+		return x.PullRequest
+	}
+	return 0
+}
+
+type GetSourceEvidenceResponse struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	SourceChange    *SourceChange          `protobuf:"bytes,1,opt,name=source_change,json=sourceChange,proto3" json:"source_change,omitempty"`
+	Files           []*SourceFile          `protobuf:"bytes,2,rep,name=files,proto3" json:"files,omitempty"`
+	SourceReviews   []*SourceReview        `protobuf:"bytes,3,rep,name=source_reviews,json=sourceReviews,proto3" json:"source_reviews,omitempty"`
+	Checks          []*SourceCheck         `protobuf:"bytes,4,rep,name=checks,proto3" json:"checks,omitempty"`
+	CapturedAt      string                 `protobuf:"bytes,5,opt,name=captured_at,json=capturedAt,proto3" json:"captured_at,omitempty"`
+	ChecksTruncated bool                   `protobuf:"varint,6,opt,name=checks_truncated,json=checksTruncated,proto3" json:"checks_truncated,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *GetSourceEvidenceResponse) Reset() {
+	*x = GetSourceEvidenceResponse{}
+	mi := &file_statecraft_v1_review_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSourceEvidenceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSourceEvidenceResponse) ProtoMessage() {}
+
+func (x *GetSourceEvidenceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_statecraft_v1_review_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSourceEvidenceResponse.ProtoReflect.Descriptor instead.
+func (*GetSourceEvidenceResponse) Descriptor() ([]byte, []int) {
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetSourceEvidenceResponse) GetSourceChange() *SourceChange {
+	if x != nil {
+		return x.SourceChange
+	}
+	return nil
+}
+
+func (x *GetSourceEvidenceResponse) GetFiles() []*SourceFile {
+	if x != nil {
+		return x.Files
+	}
+	return nil
+}
+
+func (x *GetSourceEvidenceResponse) GetSourceReviews() []*SourceReview {
+	if x != nil {
+		return x.SourceReviews
+	}
+	return nil
+}
+
+func (x *GetSourceEvidenceResponse) GetChecks() []*SourceCheck {
+	if x != nil {
+		return x.Checks
+	}
+	return nil
+}
+
+func (x *GetSourceEvidenceResponse) GetCapturedAt() string {
+	if x != nil {
+		return x.CapturedAt
+	}
+	return ""
+}
+
+func (x *GetSourceEvidenceResponse) GetChecksTruncated() bool {
+	if x != nil {
+		return x.ChecksTruncated
+	}
+	return false
+}
+
+type SourceChange struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Repository    string                 `protobuf:"bytes,1,opt,name=repository,proto3" json:"repository,omitempty"`
+	Number        int64                  `protobuf:"varint,2,opt,name=number,proto3" json:"number,omitempty"`
+	Title         string                 `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty"`
+	Author        string                 `protobuf:"bytes,4,opt,name=author,proto3" json:"author,omitempty"`
+	HeadSha       string                 `protobuf:"bytes,5,opt,name=head_sha,json=headSha,proto3" json:"head_sha,omitempty"`
+	BaseRef       string                 `protobuf:"bytes,6,opt,name=base_ref,json=baseRef,proto3" json:"base_ref,omitempty"`
+	State         string                 `protobuf:"bytes,7,opt,name=state,proto3" json:"state,omitempty"`
+	Draft         bool                   `protobuf:"varint,8,opt,name=draft,proto3" json:"draft,omitempty"`
+	Url           string                 `protobuf:"bytes,9,opt,name=url,proto3" json:"url,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SourceChange) Reset() {
+	*x = SourceChange{}
+	mi := &file_statecraft_v1_review_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SourceChange) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SourceChange) ProtoMessage() {}
+
+func (x *SourceChange) ProtoReflect() protoreflect.Message {
+	mi := &file_statecraft_v1_review_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SourceChange.ProtoReflect.Descriptor instead.
+func (*SourceChange) Descriptor() ([]byte, []int) {
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *SourceChange) GetRepository() string {
+	if x != nil {
+		return x.Repository
+	}
+	return ""
+}
+
+func (x *SourceChange) GetNumber() int64 {
+	if x != nil {
+		return x.Number
+	}
+	return 0
+}
+
+func (x *SourceChange) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *SourceChange) GetAuthor() string {
+	if x != nil {
+		return x.Author
+	}
+	return ""
+}
+
+func (x *SourceChange) GetHeadSha() string {
+	if x != nil {
+		return x.HeadSha
+	}
+	return ""
+}
+
+func (x *SourceChange) GetBaseRef() string {
+	if x != nil {
+		return x.BaseRef
+	}
+	return ""
+}
+
+func (x *SourceChange) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *SourceChange) GetDraft() bool {
+	if x != nil {
+		return x.Draft
+	}
+	return false
+}
+
+func (x *SourceChange) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+type SourceFile struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Path           string                 `protobuf:"bytes,1,opt,name=path,proto3" json:"path,omitempty"`
+	PreviousPath   string                 `protobuf:"bytes,2,opt,name=previous_path,json=previousPath,proto3" json:"previous_path,omitempty"`
+	Status         string                 `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`
+	Additions      int64                  `protobuf:"varint,4,opt,name=additions,proto3" json:"additions,omitempty"`
+	Deletions      int64                  `protobuf:"varint,5,opt,name=deletions,proto3" json:"deletions,omitempty"`
+	Patch          string                 `protobuf:"bytes,6,opt,name=patch,proto3" json:"patch,omitempty"`
+	PatchAvailable bool                   `protobuf:"varint,7,opt,name=patch_available,json=patchAvailable,proto3" json:"patch_available,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *SourceFile) Reset() {
+	*x = SourceFile{}
+	mi := &file_statecraft_v1_review_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SourceFile) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SourceFile) ProtoMessage() {}
+
+func (x *SourceFile) ProtoReflect() protoreflect.Message {
+	mi := &file_statecraft_v1_review_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SourceFile.ProtoReflect.Descriptor instead.
+func (*SourceFile) Descriptor() ([]byte, []int) {
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *SourceFile) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+func (x *SourceFile) GetPreviousPath() string {
+	if x != nil {
+		return x.PreviousPath
+	}
+	return ""
+}
+
+func (x *SourceFile) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *SourceFile) GetAdditions() int64 {
+	if x != nil {
+		return x.Additions
+	}
+	return 0
+}
+
+func (x *SourceFile) GetDeletions() int64 {
+	if x != nil {
+		return x.Deletions
+	}
+	return 0
+}
+
+func (x *SourceFile) GetPatch() string {
+	if x != nil {
+		return x.Patch
+	}
+	return ""
+}
+
+func (x *SourceFile) GetPatchAvailable() bool {
+	if x != nil {
+		return x.PatchAvailable
+	}
+	return false
+}
+
+type SourceReview struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Actor         string                 `protobuf:"bytes,1,opt,name=actor,proto3" json:"actor,omitempty"`
+	Decision      string                 `protobuf:"bytes,2,opt,name=decision,proto3" json:"decision,omitempty"`
+	CommitSha     string                 `protobuf:"bytes,3,opt,name=commit_sha,json=commitSha,proto3" json:"commit_sha,omitempty"`
+	CreatedAt     string                 `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	Url           string                 `protobuf:"bytes,5,opt,name=url,proto3" json:"url,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SourceReview) Reset() {
+	*x = SourceReview{}
+	mi := &file_statecraft_v1_review_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SourceReview) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SourceReview) ProtoMessage() {}
+
+func (x *SourceReview) ProtoReflect() protoreflect.Message {
+	mi := &file_statecraft_v1_review_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SourceReview.ProtoReflect.Descriptor instead.
+func (*SourceReview) Descriptor() ([]byte, []int) {
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *SourceReview) GetActor() string {
+	if x != nil {
+		return x.Actor
+	}
+	return ""
+}
+
+func (x *SourceReview) GetDecision() string {
+	if x != nil {
+		return x.Decision
+	}
+	return ""
+}
+
+func (x *SourceReview) GetCommitSha() string {
+	if x != nil {
+		return x.CommitSha
+	}
+	return ""
+}
+
+func (x *SourceReview) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *SourceReview) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+type SourceCheck struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Name           string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Status         string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	Conclusion     string                 `protobuf:"bytes,3,opt,name=conclusion,proto3" json:"conclusion,omitempty"`
+	Url            string                 `protobuf:"bytes,4,opt,name=url,proto3" json:"url,omitempty"`
+	EvidenceSource string                 `protobuf:"bytes,5,opt,name=evidence_source,json=evidenceSource,proto3" json:"evidence_source,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *SourceCheck) Reset() {
+	*x = SourceCheck{}
+	mi := &file_statecraft_v1_review_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SourceCheck) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SourceCheck) ProtoMessage() {}
+
+func (x *SourceCheck) ProtoReflect() protoreflect.Message {
+	mi := &file_statecraft_v1_review_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SourceCheck.ProtoReflect.Descriptor instead.
+func (*SourceCheck) Descriptor() ([]byte, []int) {
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *SourceCheck) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *SourceCheck) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *SourceCheck) GetConclusion() string {
+	if x != nil {
+		return x.Conclusion
+	}
+	return ""
+}
+
+func (x *SourceCheck) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+func (x *SourceCheck) GetEvidenceSource() string {
+	if x != nil {
+		return x.EvidenceSource
+	}
+	return ""
+}
+
 type GetReviewRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ReviewId      string                 `protobuf:"bytes,1,opt,name=review_id,json=reviewId,proto3" json:"review_id,omitempty"`
@@ -30,7 +614,7 @@ type GetReviewRequest struct {
 
 func (x *GetReviewRequest) Reset() {
 	*x = GetReviewRequest{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[0]
+	mi := &file_statecraft_v1_review_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42,7 +626,7 @@ func (x *GetReviewRequest) String() string {
 func (*GetReviewRequest) ProtoMessage() {}
 
 func (x *GetReviewRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[0]
+	mi := &file_statecraft_v1_review_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55,7 +639,7 @@ func (x *GetReviewRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetReviewRequest.ProtoReflect.Descriptor instead.
 func (*GetReviewRequest) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{0}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *GetReviewRequest) GetReviewId() string {
@@ -74,7 +658,7 @@ type GetReviewResponse struct {
 
 func (x *GetReviewResponse) Reset() {
 	*x = GetReviewResponse{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[1]
+	mi := &file_statecraft_v1_review_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -86,7 +670,7 @@ func (x *GetReviewResponse) String() string {
 func (*GetReviewResponse) ProtoMessage() {}
 
 func (x *GetReviewResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[1]
+	mi := &file_statecraft_v1_review_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -99,7 +683,7 @@ func (x *GetReviewResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetReviewResponse.ProtoReflect.Descriptor instead.
 func (*GetReviewResponse) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{1}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *GetReviewResponse) GetReview() *Review {
@@ -138,7 +722,7 @@ type Review struct {
 
 func (x *Review) Reset() {
 	*x = Review{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[2]
+	mi := &file_statecraft_v1_review_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -150,7 +734,7 @@ func (x *Review) String() string {
 func (*Review) ProtoMessage() {}
 
 func (x *Review) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[2]
+	mi := &file_statecraft_v1_review_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -163,7 +747,7 @@ func (x *Review) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Review.ProtoReflect.Descriptor instead.
 func (*Review) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{2}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *Review) GetId() string {
@@ -326,7 +910,7 @@ type Root struct {
 
 func (x *Root) Reset() {
 	*x = Root{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[3]
+	mi := &file_statecraft_v1_review_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -338,7 +922,7 @@ func (x *Root) String() string {
 func (*Root) ProtoMessage() {}
 
 func (x *Root) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[3]
+	mi := &file_statecraft_v1_review_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -351,7 +935,7 @@ func (x *Root) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Root.ProtoReflect.Descriptor instead.
 func (*Root) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{3}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *Root) GetId() string {
@@ -410,7 +994,7 @@ type Change struct {
 
 func (x *Change) Reset() {
 	*x = Change{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[4]
+	mi := &file_statecraft_v1_review_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -422,7 +1006,7 @@ func (x *Change) String() string {
 func (*Change) ProtoMessage() {}
 
 func (x *Change) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[4]
+	mi := &file_statecraft_v1_review_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -435,7 +1019,7 @@ func (x *Change) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Change.ProtoReflect.Descriptor instead.
 func (*Change) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{4}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *Change) GetId() string {
@@ -543,7 +1127,7 @@ type Finding struct {
 
 func (x *Finding) Reset() {
 	*x = Finding{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[5]
+	mi := &file_statecraft_v1_review_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -555,7 +1139,7 @@ func (x *Finding) String() string {
 func (*Finding) ProtoMessage() {}
 
 func (x *Finding) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[5]
+	mi := &file_statecraft_v1_review_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -568,7 +1152,7 @@ func (x *Finding) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Finding.ProtoReflect.Descriptor instead.
 func (*Finding) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{5}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *Finding) GetId() string {
@@ -630,7 +1214,7 @@ type ReviewDecision struct {
 
 func (x *ReviewDecision) Reset() {
 	*x = ReviewDecision{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[6]
+	mi := &file_statecraft_v1_review_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -642,7 +1226,7 @@ func (x *ReviewDecision) String() string {
 func (*ReviewDecision) ProtoMessage() {}
 
 func (x *ReviewDecision) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[6]
+	mi := &file_statecraft_v1_review_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -655,7 +1239,7 @@ func (x *ReviewDecision) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReviewDecision.ProtoReflect.Descriptor instead.
 func (*ReviewDecision) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{6}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ReviewDecision) GetActor() string {
@@ -732,7 +1316,7 @@ type PropertyChange struct {
 
 func (x *PropertyChange) Reset() {
 	*x = PropertyChange{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[7]
+	mi := &file_statecraft_v1_review_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -744,7 +1328,7 @@ func (x *PropertyChange) String() string {
 func (*PropertyChange) ProtoMessage() {}
 
 func (x *PropertyChange) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[7]
+	mi := &file_statecraft_v1_review_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -757,7 +1341,7 @@ func (x *PropertyChange) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PropertyChange.ProtoReflect.Descriptor instead.
 func (*PropertyChange) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{7}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *PropertyChange) GetName() string {
@@ -793,7 +1377,7 @@ type ResourceRelationship struct {
 
 func (x *ResourceRelationship) Reset() {
 	*x = ResourceRelationship{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[8]
+	mi := &file_statecraft_v1_review_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -805,7 +1389,7 @@ func (x *ResourceRelationship) String() string {
 func (*ResourceRelationship) ProtoMessage() {}
 
 func (x *ResourceRelationship) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[8]
+	mi := &file_statecraft_v1_review_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -818,7 +1402,7 @@ func (x *ResourceRelationship) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResourceRelationship.ProtoReflect.Descriptor instead.
 func (*ResourceRelationship) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{8}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ResourceRelationship) GetResourceId() string {
@@ -864,7 +1448,7 @@ type PlanSnapshot struct {
 
 func (x *PlanSnapshot) Reset() {
 	*x = PlanSnapshot{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[9]
+	mi := &file_statecraft_v1_review_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -876,7 +1460,7 @@ func (x *PlanSnapshot) String() string {
 func (*PlanSnapshot) ProtoMessage() {}
 
 func (x *PlanSnapshot) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[9]
+	mi := &file_statecraft_v1_review_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -889,7 +1473,7 @@ func (x *PlanSnapshot) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PlanSnapshot.ProtoReflect.Descriptor instead.
 func (*PlanSnapshot) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{9}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *PlanSnapshot) GetId() string {
@@ -953,7 +1537,7 @@ type PolicyResult struct {
 
 func (x *PolicyResult) Reset() {
 	*x = PolicyResult{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[10]
+	mi := &file_statecraft_v1_review_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -965,7 +1549,7 @@ func (x *PolicyResult) String() string {
 func (*PolicyResult) ProtoMessage() {}
 
 func (x *PolicyResult) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[10]
+	mi := &file_statecraft_v1_review_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -978,7 +1562,7 @@ func (x *PolicyResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PolicyResult.ProtoReflect.Descriptor instead.
 func (*PolicyResult) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{10}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *PolicyResult) GetId() string {
@@ -1029,7 +1613,7 @@ type PolicyViolation struct {
 
 func (x *PolicyViolation) Reset() {
 	*x = PolicyViolation{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[11]
+	mi := &file_statecraft_v1_review_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1041,7 +1625,7 @@ func (x *PolicyViolation) String() string {
 func (*PolicyViolation) ProtoMessage() {}
 
 func (x *PolicyViolation) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[11]
+	mi := &file_statecraft_v1_review_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1054,7 +1638,7 @@ func (x *PolicyViolation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PolicyViolation.ProtoReflect.Descriptor instead.
 func (*PolicyViolation) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{11}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *PolicyViolation) GetId() string {
@@ -1157,7 +1741,7 @@ type PolicyEvaluation struct {
 
 func (x *PolicyEvaluation) Reset() {
 	*x = PolicyEvaluation{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[12]
+	mi := &file_statecraft_v1_review_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1169,7 +1753,7 @@ func (x *PolicyEvaluation) String() string {
 func (*PolicyEvaluation) ProtoMessage() {}
 
 func (x *PolicyEvaluation) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[12]
+	mi := &file_statecraft_v1_review_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1182,7 +1766,7 @@ func (x *PolicyEvaluation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PolicyEvaluation.ProtoReflect.Descriptor instead.
 func (*PolicyEvaluation) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{12}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *PolicyEvaluation) GetId() string {
@@ -1261,7 +1845,7 @@ type ViolationAcceptance struct {
 
 func (x *ViolationAcceptance) Reset() {
 	*x = ViolationAcceptance{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[13]
+	mi := &file_statecraft_v1_review_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1273,7 +1857,7 @@ func (x *ViolationAcceptance) String() string {
 func (*ViolationAcceptance) ProtoMessage() {}
 
 func (x *ViolationAcceptance) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[13]
+	mi := &file_statecraft_v1_review_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1286,7 +1870,7 @@ func (x *ViolationAcceptance) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ViolationAcceptance.ProtoReflect.Descriptor instead.
 func (*ViolationAcceptance) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{13}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *ViolationAcceptance) GetId() string {
@@ -1384,7 +1968,7 @@ type ActionDecision struct {
 
 func (x *ActionDecision) Reset() {
 	*x = ActionDecision{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[14]
+	mi := &file_statecraft_v1_review_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1396,7 +1980,7 @@ func (x *ActionDecision) String() string {
 func (*ActionDecision) ProtoMessage() {}
 
 func (x *ActionDecision) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[14]
+	mi := &file_statecraft_v1_review_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1409,7 +1993,7 @@ func (x *ActionDecision) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActionDecision.ProtoReflect.Descriptor instead.
 func (*ActionDecision) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{14}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *ActionDecision) GetAction() string {
@@ -1446,7 +2030,7 @@ type WorkflowCommand struct {
 
 func (x *WorkflowCommand) Reset() {
 	*x = WorkflowCommand{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[15]
+	mi := &file_statecraft_v1_review_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1458,7 +2042,7 @@ func (x *WorkflowCommand) String() string {
 func (*WorkflowCommand) ProtoMessage() {}
 
 func (x *WorkflowCommand) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[15]
+	mi := &file_statecraft_v1_review_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1471,7 +2055,7 @@ func (x *WorkflowCommand) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WorkflowCommand.ProtoReflect.Descriptor instead.
 func (*WorkflowCommand) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{15}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *WorkflowCommand) GetAction() string {
@@ -1524,7 +2108,7 @@ type ExecutionRecord struct {
 
 func (x *ExecutionRecord) Reset() {
 	*x = ExecutionRecord{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[16]
+	mi := &file_statecraft_v1_review_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1536,7 +2120,7 @@ func (x *ExecutionRecord) String() string {
 func (*ExecutionRecord) ProtoMessage() {}
 
 func (x *ExecutionRecord) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[16]
+	mi := &file_statecraft_v1_review_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1549,7 +2133,7 @@ func (x *ExecutionRecord) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecutionRecord.ProtoReflect.Descriptor instead.
 func (*ExecutionRecord) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{16}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *ExecutionRecord) GetId() string {
@@ -1612,7 +2196,7 @@ type ReviewEvent struct {
 
 func (x *ReviewEvent) Reset() {
 	*x = ReviewEvent{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[17]
+	mi := &file_statecraft_v1_review_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1624,7 +2208,7 @@ func (x *ReviewEvent) String() string {
 func (*ReviewEvent) ProtoMessage() {}
 
 func (x *ReviewEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[17]
+	mi := &file_statecraft_v1_review_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1637,7 +2221,7 @@ func (x *ReviewEvent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReviewEvent.ProtoReflect.Descriptor instead.
 func (*ReviewEvent) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{17}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *ReviewEvent) GetTitle() string {
@@ -1670,7 +2254,7 @@ type CreateDemoRequest struct {
 
 func (x *CreateDemoRequest) Reset() {
 	*x = CreateDemoRequest{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[18]
+	mi := &file_statecraft_v1_review_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1682,7 +2266,7 @@ func (x *CreateDemoRequest) String() string {
 func (*CreateDemoRequest) ProtoMessage() {}
 
 func (x *CreateDemoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[18]
+	mi := &file_statecraft_v1_review_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1695,7 +2279,7 @@ func (x *CreateDemoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateDemoRequest.ProtoReflect.Descriptor instead.
 func (*CreateDemoRequest) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{18}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *CreateDemoRequest) GetScenario() string {
@@ -1715,7 +2299,7 @@ type ActOnDemoRequest struct {
 
 func (x *ActOnDemoRequest) Reset() {
 	*x = ActOnDemoRequest{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[19]
+	mi := &file_statecraft_v1_review_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1727,7 +2311,7 @@ func (x *ActOnDemoRequest) String() string {
 func (*ActOnDemoRequest) ProtoMessage() {}
 
 func (x *ActOnDemoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[19]
+	mi := &file_statecraft_v1_review_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1740,7 +2324,7 @@ func (x *ActOnDemoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActOnDemoRequest.ProtoReflect.Descriptor instead.
 func (*ActOnDemoRequest) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{19}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *ActOnDemoRequest) GetReviewId() string {
@@ -1766,7 +2350,7 @@ type CreateDemoResponse struct {
 
 func (x *CreateDemoResponse) Reset() {
 	*x = CreateDemoResponse{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[20]
+	mi := &file_statecraft_v1_review_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1778,7 +2362,7 @@ func (x *CreateDemoResponse) String() string {
 func (*CreateDemoResponse) ProtoMessage() {}
 
 func (x *CreateDemoResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[20]
+	mi := &file_statecraft_v1_review_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1791,7 +2375,7 @@ func (x *CreateDemoResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateDemoResponse.ProtoReflect.Descriptor instead.
 func (*CreateDemoResponse) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{20}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *CreateDemoResponse) GetReview() *Review {
@@ -1810,7 +2394,7 @@ type GetDemoRequest struct {
 
 func (x *GetDemoRequest) Reset() {
 	*x = GetDemoRequest{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[21]
+	mi := &file_statecraft_v1_review_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1822,7 +2406,7 @@ func (x *GetDemoRequest) String() string {
 func (*GetDemoRequest) ProtoMessage() {}
 
 func (x *GetDemoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[21]
+	mi := &file_statecraft_v1_review_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1835,7 +2419,7 @@ func (x *GetDemoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDemoRequest.ProtoReflect.Descriptor instead.
 func (*GetDemoRequest) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{21}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *GetDemoRequest) GetReviewId() string {
@@ -1854,7 +2438,7 @@ type GetDemoResponse struct {
 
 func (x *GetDemoResponse) Reset() {
 	*x = GetDemoResponse{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[22]
+	mi := &file_statecraft_v1_review_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1866,7 +2450,7 @@ func (x *GetDemoResponse) String() string {
 func (*GetDemoResponse) ProtoMessage() {}
 
 func (x *GetDemoResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[22]
+	mi := &file_statecraft_v1_review_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1879,7 +2463,7 @@ func (x *GetDemoResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDemoResponse.ProtoReflect.Descriptor instead.
 func (*GetDemoResponse) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{22}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *GetDemoResponse) GetReview() *Review {
@@ -1898,7 +2482,7 @@ type ActOnDemoResponse struct {
 
 func (x *ActOnDemoResponse) Reset() {
 	*x = ActOnDemoResponse{}
-	mi := &file_statecraft_v1_review_proto_msgTypes[23]
+	mi := &file_statecraft_v1_review_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1910,7 +2494,7 @@ func (x *ActOnDemoResponse) String() string {
 func (*ActOnDemoResponse) ProtoMessage() {}
 
 func (x *ActOnDemoResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_statecraft_v1_review_proto_msgTypes[23]
+	mi := &file_statecraft_v1_review_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1923,7 +2507,7 @@ func (x *ActOnDemoResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActOnDemoResponse.ProtoReflect.Descriptor instead.
 func (*ActOnDemoResponse) Descriptor() ([]byte, []int) {
-	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{23}
+	return file_statecraft_v1_review_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *ActOnDemoResponse) GetReview() *Review {
@@ -1937,7 +2521,63 @@ var File_statecraft_v1_review_proto protoreflect.FileDescriptor
 
 const file_statecraft_v1_review_proto_rawDesc = "" +
 	"\n" +
-	"\x1astatecraft/v1/review.proto\x12\rstatecraft.v1\"/\n" +
+	"\x1astatecraft/v1/review.proto\x12\rstatecraft.v1\"\x14\n" +
+	"\x12ListChangesRequest\"\xb8\x01\n" +
+	"\x13ListChangesResponse\x12\x1e\n" +
+	"\n" +
+	"repository\x18\x01 \x01(\tR\n" +
+	"repository\x12B\n" +
+	"\x0esource_changes\x18\x02 \x03(\v2\x1b.statecraft.v1.SourceChangeR\rsourceChanges\x12\x1c\n" +
+	"\ttruncated\x18\x03 \x01(\bR\ttruncated\x12\x1f\n" +
+	"\vcaptured_at\x18\x04 \x01(\tR\n" +
+	"capturedAt\"=\n" +
+	"\x18GetSourceEvidenceRequest\x12!\n" +
+	"\fpull_request\x18\x01 \x01(\x03R\vpullRequest\"\xd2\x02\n" +
+	"\x19GetSourceEvidenceResponse\x12@\n" +
+	"\rsource_change\x18\x01 \x01(\v2\x1b.statecraft.v1.SourceChangeR\fsourceChange\x12/\n" +
+	"\x05files\x18\x02 \x03(\v2\x19.statecraft.v1.SourceFileR\x05files\x12B\n" +
+	"\x0esource_reviews\x18\x03 \x03(\v2\x1b.statecraft.v1.SourceReviewR\rsourceReviews\x122\n" +
+	"\x06checks\x18\x04 \x03(\v2\x1a.statecraft.v1.SourceCheckR\x06checks\x12\x1f\n" +
+	"\vcaptured_at\x18\x05 \x01(\tR\n" +
+	"capturedAt\x12)\n" +
+	"\x10checks_truncated\x18\x06 \x01(\bR\x0fchecksTruncated\"\xe8\x01\n" +
+	"\fSourceChange\x12\x1e\n" +
+	"\n" +
+	"repository\x18\x01 \x01(\tR\n" +
+	"repository\x12\x16\n" +
+	"\x06number\x18\x02 \x01(\x03R\x06number\x12\x14\n" +
+	"\x05title\x18\x03 \x01(\tR\x05title\x12\x16\n" +
+	"\x06author\x18\x04 \x01(\tR\x06author\x12\x19\n" +
+	"\bhead_sha\x18\x05 \x01(\tR\aheadSha\x12\x19\n" +
+	"\bbase_ref\x18\x06 \x01(\tR\abaseRef\x12\x14\n" +
+	"\x05state\x18\a \x01(\tR\x05state\x12\x14\n" +
+	"\x05draft\x18\b \x01(\bR\x05draft\x12\x10\n" +
+	"\x03url\x18\t \x01(\tR\x03url\"\xd8\x01\n" +
+	"\n" +
+	"SourceFile\x12\x12\n" +
+	"\x04path\x18\x01 \x01(\tR\x04path\x12#\n" +
+	"\rprevious_path\x18\x02 \x01(\tR\fpreviousPath\x12\x16\n" +
+	"\x06status\x18\x03 \x01(\tR\x06status\x12\x1c\n" +
+	"\tadditions\x18\x04 \x01(\x03R\tadditions\x12\x1c\n" +
+	"\tdeletions\x18\x05 \x01(\x03R\tdeletions\x12\x14\n" +
+	"\x05patch\x18\x06 \x01(\tR\x05patch\x12'\n" +
+	"\x0fpatch_available\x18\a \x01(\bR\x0epatchAvailable\"\x90\x01\n" +
+	"\fSourceReview\x12\x14\n" +
+	"\x05actor\x18\x01 \x01(\tR\x05actor\x12\x1a\n" +
+	"\bdecision\x18\x02 \x01(\tR\bdecision\x12\x1d\n" +
+	"\n" +
+	"commit_sha\x18\x03 \x01(\tR\tcommitSha\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x04 \x01(\tR\tcreatedAt\x12\x10\n" +
+	"\x03url\x18\x05 \x01(\tR\x03url\"\x94\x01\n" +
+	"\vSourceCheck\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x16\n" +
+	"\x06status\x18\x02 \x01(\tR\x06status\x12\x1e\n" +
+	"\n" +
+	"conclusion\x18\x03 \x01(\tR\n" +
+	"conclusion\x12\x10\n" +
+	"\x03url\x18\x04 \x01(\tR\x03url\x12'\n" +
+	"\x0fevidence_source\x18\x05 \x01(\tR\x0eevidenceSource\"/\n" +
 	"\x10GetReviewRequest\x12\x1b\n" +
 	"\treview_id\x18\x01 \x01(\tR\breviewId\"B\n" +
 	"\x11GetReviewResponse\x12-\n" +
@@ -2116,7 +2756,10 @@ const file_statecraft_v1_review_proto_rawDesc = "" +
 	"\x0fGetDemoResponse\x12-\n" +
 	"\x06review\x18\x01 \x01(\v2\x15.statecraft.v1.ReviewR\x06review\"B\n" +
 	"\x11ActOnDemoResponse\x12-\n" +
-	"\x06review\x18\x01 \x01(\v2\x15.statecraft.v1.ReviewR\x06review2_\n" +
+	"\x06review\x18\x01 \x01(\v2\x15.statecraft.v1.ReviewR\x06review2\xd5\x01\n" +
+	"\x15SourceEvidenceService\x12T\n" +
+	"\vListChanges\x12!.statecraft.v1.ListChangesRequest\x1a\".statecraft.v1.ListChangesResponse\x12f\n" +
+	"\x11GetSourceEvidence\x12'.statecraft.v1.GetSourceEvidenceRequest\x1a(.statecraft.v1.GetSourceEvidenceResponse2_\n" +
 	"\rReviewService\x12N\n" +
 	"\tGetReview\x12\x1f.statecraft.v1.GetReviewRequest\x1a .statecraft.v1.GetReviewResponse2\x82\x02\n" +
 	"\x13DemoWorkflowService\x12Q\n" +
@@ -2137,67 +2780,84 @@ func file_statecraft_v1_review_proto_rawDescGZIP() []byte {
 	return file_statecraft_v1_review_proto_rawDescData
 }
 
-var file_statecraft_v1_review_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
+var file_statecraft_v1_review_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
 var file_statecraft_v1_review_proto_goTypes = []any{
-	(*GetReviewRequest)(nil),     // 0: statecraft.v1.GetReviewRequest
-	(*GetReviewResponse)(nil),    // 1: statecraft.v1.GetReviewResponse
-	(*Review)(nil),               // 2: statecraft.v1.Review
-	(*Root)(nil),                 // 3: statecraft.v1.Root
-	(*Change)(nil),               // 4: statecraft.v1.Change
-	(*Finding)(nil),              // 5: statecraft.v1.Finding
-	(*ReviewDecision)(nil),       // 6: statecraft.v1.ReviewDecision
-	(*PropertyChange)(nil),       // 7: statecraft.v1.PropertyChange
-	(*ResourceRelationship)(nil), // 8: statecraft.v1.ResourceRelationship
-	(*PlanSnapshot)(nil),         // 9: statecraft.v1.PlanSnapshot
-	(*PolicyResult)(nil),         // 10: statecraft.v1.PolicyResult
-	(*PolicyViolation)(nil),      // 11: statecraft.v1.PolicyViolation
-	(*PolicyEvaluation)(nil),     // 12: statecraft.v1.PolicyEvaluation
-	(*ViolationAcceptance)(nil),  // 13: statecraft.v1.ViolationAcceptance
-	(*ActionDecision)(nil),       // 14: statecraft.v1.ActionDecision
-	(*WorkflowCommand)(nil),      // 15: statecraft.v1.WorkflowCommand
-	(*ExecutionRecord)(nil),      // 16: statecraft.v1.ExecutionRecord
-	(*ReviewEvent)(nil),          // 17: statecraft.v1.ReviewEvent
-	(*CreateDemoRequest)(nil),    // 18: statecraft.v1.CreateDemoRequest
-	(*ActOnDemoRequest)(nil),     // 19: statecraft.v1.ActOnDemoRequest
-	(*CreateDemoResponse)(nil),   // 20: statecraft.v1.CreateDemoResponse
-	(*GetDemoRequest)(nil),       // 21: statecraft.v1.GetDemoRequest
-	(*GetDemoResponse)(nil),      // 22: statecraft.v1.GetDemoResponse
-	(*ActOnDemoResponse)(nil),    // 23: statecraft.v1.ActOnDemoResponse
+	(*ListChangesRequest)(nil),        // 0: statecraft.v1.ListChangesRequest
+	(*ListChangesResponse)(nil),       // 1: statecraft.v1.ListChangesResponse
+	(*GetSourceEvidenceRequest)(nil),  // 2: statecraft.v1.GetSourceEvidenceRequest
+	(*GetSourceEvidenceResponse)(nil), // 3: statecraft.v1.GetSourceEvidenceResponse
+	(*SourceChange)(nil),              // 4: statecraft.v1.SourceChange
+	(*SourceFile)(nil),                // 5: statecraft.v1.SourceFile
+	(*SourceReview)(nil),              // 6: statecraft.v1.SourceReview
+	(*SourceCheck)(nil),               // 7: statecraft.v1.SourceCheck
+	(*GetReviewRequest)(nil),          // 8: statecraft.v1.GetReviewRequest
+	(*GetReviewResponse)(nil),         // 9: statecraft.v1.GetReviewResponse
+	(*Review)(nil),                    // 10: statecraft.v1.Review
+	(*Root)(nil),                      // 11: statecraft.v1.Root
+	(*Change)(nil),                    // 12: statecraft.v1.Change
+	(*Finding)(nil),                   // 13: statecraft.v1.Finding
+	(*ReviewDecision)(nil),            // 14: statecraft.v1.ReviewDecision
+	(*PropertyChange)(nil),            // 15: statecraft.v1.PropertyChange
+	(*ResourceRelationship)(nil),      // 16: statecraft.v1.ResourceRelationship
+	(*PlanSnapshot)(nil),              // 17: statecraft.v1.PlanSnapshot
+	(*PolicyResult)(nil),              // 18: statecraft.v1.PolicyResult
+	(*PolicyViolation)(nil),           // 19: statecraft.v1.PolicyViolation
+	(*PolicyEvaluation)(nil),          // 20: statecraft.v1.PolicyEvaluation
+	(*ViolationAcceptance)(nil),       // 21: statecraft.v1.ViolationAcceptance
+	(*ActionDecision)(nil),            // 22: statecraft.v1.ActionDecision
+	(*WorkflowCommand)(nil),           // 23: statecraft.v1.WorkflowCommand
+	(*ExecutionRecord)(nil),           // 24: statecraft.v1.ExecutionRecord
+	(*ReviewEvent)(nil),               // 25: statecraft.v1.ReviewEvent
+	(*CreateDemoRequest)(nil),         // 26: statecraft.v1.CreateDemoRequest
+	(*ActOnDemoRequest)(nil),          // 27: statecraft.v1.ActOnDemoRequest
+	(*CreateDemoResponse)(nil),        // 28: statecraft.v1.CreateDemoResponse
+	(*GetDemoRequest)(nil),            // 29: statecraft.v1.GetDemoRequest
+	(*GetDemoResponse)(nil),           // 30: statecraft.v1.GetDemoResponse
+	(*ActOnDemoResponse)(nil),         // 31: statecraft.v1.ActOnDemoResponse
 }
 var file_statecraft_v1_review_proto_depIdxs = []int32{
-	2,  // 0: statecraft.v1.GetReviewResponse.review:type_name -> statecraft.v1.Review
-	3,  // 1: statecraft.v1.Review.roots:type_name -> statecraft.v1.Root
-	4,  // 2: statecraft.v1.Review.changes:type_name -> statecraft.v1.Change
-	5,  // 3: statecraft.v1.Review.findings:type_name -> statecraft.v1.Finding
-	6,  // 4: statecraft.v1.Review.decisions:type_name -> statecraft.v1.ReviewDecision
-	9,  // 5: statecraft.v1.Review.plan:type_name -> statecraft.v1.PlanSnapshot
-	12, // 6: statecraft.v1.Review.policy:type_name -> statecraft.v1.PolicyEvaluation
-	13, // 7: statecraft.v1.Review.acceptances:type_name -> statecraft.v1.ViolationAcceptance
-	16, // 8: statecraft.v1.Review.attempts:type_name -> statecraft.v1.ExecutionRecord
-	17, // 9: statecraft.v1.Review.history:type_name -> statecraft.v1.ReviewEvent
-	9,  // 10: statecraft.v1.Review.plan_history:type_name -> statecraft.v1.PlanSnapshot
-	14, // 11: statecraft.v1.Review.actions:type_name -> statecraft.v1.ActionDecision
-	7,  // 12: statecraft.v1.Change.properties:type_name -> statecraft.v1.PropertyChange
-	8,  // 13: statecraft.v1.Change.relationships:type_name -> statecraft.v1.ResourceRelationship
-	10, // 14: statecraft.v1.PolicyEvaluation.results:type_name -> statecraft.v1.PolicyResult
-	11, // 15: statecraft.v1.PolicyEvaluation.violations:type_name -> statecraft.v1.PolicyViolation
-	15, // 16: statecraft.v1.ActOnDemoRequest.command:type_name -> statecraft.v1.WorkflowCommand
-	2,  // 17: statecraft.v1.CreateDemoResponse.review:type_name -> statecraft.v1.Review
-	2,  // 18: statecraft.v1.GetDemoResponse.review:type_name -> statecraft.v1.Review
-	2,  // 19: statecraft.v1.ActOnDemoResponse.review:type_name -> statecraft.v1.Review
-	0,  // 20: statecraft.v1.ReviewService.GetReview:input_type -> statecraft.v1.GetReviewRequest
-	18, // 21: statecraft.v1.DemoWorkflowService.CreateDemo:input_type -> statecraft.v1.CreateDemoRequest
-	21, // 22: statecraft.v1.DemoWorkflowService.GetDemo:input_type -> statecraft.v1.GetDemoRequest
-	19, // 23: statecraft.v1.DemoWorkflowService.ActOnDemo:input_type -> statecraft.v1.ActOnDemoRequest
-	1,  // 24: statecraft.v1.ReviewService.GetReview:output_type -> statecraft.v1.GetReviewResponse
-	20, // 25: statecraft.v1.DemoWorkflowService.CreateDemo:output_type -> statecraft.v1.CreateDemoResponse
-	22, // 26: statecraft.v1.DemoWorkflowService.GetDemo:output_type -> statecraft.v1.GetDemoResponse
-	23, // 27: statecraft.v1.DemoWorkflowService.ActOnDemo:output_type -> statecraft.v1.ActOnDemoResponse
-	24, // [24:28] is the sub-list for method output_type
-	20, // [20:24] is the sub-list for method input_type
-	20, // [20:20] is the sub-list for extension type_name
-	20, // [20:20] is the sub-list for extension extendee
-	0,  // [0:20] is the sub-list for field type_name
+	4,  // 0: statecraft.v1.ListChangesResponse.source_changes:type_name -> statecraft.v1.SourceChange
+	4,  // 1: statecraft.v1.GetSourceEvidenceResponse.source_change:type_name -> statecraft.v1.SourceChange
+	5,  // 2: statecraft.v1.GetSourceEvidenceResponse.files:type_name -> statecraft.v1.SourceFile
+	6,  // 3: statecraft.v1.GetSourceEvidenceResponse.source_reviews:type_name -> statecraft.v1.SourceReview
+	7,  // 4: statecraft.v1.GetSourceEvidenceResponse.checks:type_name -> statecraft.v1.SourceCheck
+	10, // 5: statecraft.v1.GetReviewResponse.review:type_name -> statecraft.v1.Review
+	11, // 6: statecraft.v1.Review.roots:type_name -> statecraft.v1.Root
+	12, // 7: statecraft.v1.Review.changes:type_name -> statecraft.v1.Change
+	13, // 8: statecraft.v1.Review.findings:type_name -> statecraft.v1.Finding
+	14, // 9: statecraft.v1.Review.decisions:type_name -> statecraft.v1.ReviewDecision
+	17, // 10: statecraft.v1.Review.plan:type_name -> statecraft.v1.PlanSnapshot
+	20, // 11: statecraft.v1.Review.policy:type_name -> statecraft.v1.PolicyEvaluation
+	21, // 12: statecraft.v1.Review.acceptances:type_name -> statecraft.v1.ViolationAcceptance
+	24, // 13: statecraft.v1.Review.attempts:type_name -> statecraft.v1.ExecutionRecord
+	25, // 14: statecraft.v1.Review.history:type_name -> statecraft.v1.ReviewEvent
+	17, // 15: statecraft.v1.Review.plan_history:type_name -> statecraft.v1.PlanSnapshot
+	22, // 16: statecraft.v1.Review.actions:type_name -> statecraft.v1.ActionDecision
+	15, // 17: statecraft.v1.Change.properties:type_name -> statecraft.v1.PropertyChange
+	16, // 18: statecraft.v1.Change.relationships:type_name -> statecraft.v1.ResourceRelationship
+	18, // 19: statecraft.v1.PolicyEvaluation.results:type_name -> statecraft.v1.PolicyResult
+	19, // 20: statecraft.v1.PolicyEvaluation.violations:type_name -> statecraft.v1.PolicyViolation
+	23, // 21: statecraft.v1.ActOnDemoRequest.command:type_name -> statecraft.v1.WorkflowCommand
+	10, // 22: statecraft.v1.CreateDemoResponse.review:type_name -> statecraft.v1.Review
+	10, // 23: statecraft.v1.GetDemoResponse.review:type_name -> statecraft.v1.Review
+	10, // 24: statecraft.v1.ActOnDemoResponse.review:type_name -> statecraft.v1.Review
+	0,  // 25: statecraft.v1.SourceEvidenceService.ListChanges:input_type -> statecraft.v1.ListChangesRequest
+	2,  // 26: statecraft.v1.SourceEvidenceService.GetSourceEvidence:input_type -> statecraft.v1.GetSourceEvidenceRequest
+	8,  // 27: statecraft.v1.ReviewService.GetReview:input_type -> statecraft.v1.GetReviewRequest
+	26, // 28: statecraft.v1.DemoWorkflowService.CreateDemo:input_type -> statecraft.v1.CreateDemoRequest
+	29, // 29: statecraft.v1.DemoWorkflowService.GetDemo:input_type -> statecraft.v1.GetDemoRequest
+	27, // 30: statecraft.v1.DemoWorkflowService.ActOnDemo:input_type -> statecraft.v1.ActOnDemoRequest
+	1,  // 31: statecraft.v1.SourceEvidenceService.ListChanges:output_type -> statecraft.v1.ListChangesResponse
+	3,  // 32: statecraft.v1.SourceEvidenceService.GetSourceEvidence:output_type -> statecraft.v1.GetSourceEvidenceResponse
+	9,  // 33: statecraft.v1.ReviewService.GetReview:output_type -> statecraft.v1.GetReviewResponse
+	28, // 34: statecraft.v1.DemoWorkflowService.CreateDemo:output_type -> statecraft.v1.CreateDemoResponse
+	30, // 35: statecraft.v1.DemoWorkflowService.GetDemo:output_type -> statecraft.v1.GetDemoResponse
+	31, // 36: statecraft.v1.DemoWorkflowService.ActOnDemo:output_type -> statecraft.v1.ActOnDemoResponse
+	31, // [31:37] is the sub-list for method output_type
+	25, // [25:31] is the sub-list for method input_type
+	25, // [25:25] is the sub-list for extension type_name
+	25, // [25:25] is the sub-list for extension extendee
+	0,  // [0:25] is the sub-list for field type_name
 }
 
 func init() { file_statecraft_v1_review_proto_init() }
@@ -2211,9 +2871,9 @@ func file_statecraft_v1_review_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_statecraft_v1_review_proto_rawDesc), len(file_statecraft_v1_review_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   24,
+			NumMessages:   32,
 			NumExtensions: 0,
-			NumServices:   2,
+			NumServices:   3,
 		},
 		GoTypes:           file_statecraft_v1_review_proto_goTypes,
 		DependencyIndexes: file_statecraft_v1_review_proto_depIdxs,

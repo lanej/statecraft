@@ -1,4 +1,5 @@
 import "./style.css";
+import "./source.css";
 import { equals } from "@bufbuild/protobuf";
 import { createConnectTransport } from "@connectrpc/connect-web";
 import {
@@ -240,7 +241,26 @@ async function start() {
   }
   await create("review");
 }
-void start();
+async function bootstrap() {
+  try {
+    const response = await fetch("/runtime", { cache: "no-store" });
+    if (!response.ok)
+      throw new Error("The service configuration is unavailable.");
+    const config = await response.json();
+    if (config.mode === "read_only") {
+      const { startSource } = await import("./source");
+      await startSource(app);
+    } else if (config.mode === "mock") {
+      await start();
+    } else {
+      throw new Error("The service mode is unsupported.");
+    }
+  } catch {
+    app.innerHTML =
+      '<div class="load-error" role="alert"><h1>Could not open Statecraft</h1><p>Reload the page to retry. If your session expired, sign in through IAP again.</p></div>';
+  }
+}
+void bootstrap();
 setInterval(async () => {
   if (
     !review ||

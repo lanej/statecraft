@@ -1,0 +1,248 @@
+.source-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 28px;
+  border-bottom: 1px solid #d8e3ed;
+  background: #081220;
+  color: #f7fbff;
+}
+.source-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: auto;
+}
+.source-brand strong {
+  display: block;
+  font-size: 22px;
+}
+.source-brand span {
+  display: block;
+  color: #9fb2c7;
+  font-size: 12px;
+}
+.source-mode {
+  color: #63ead1;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.source-header .button {
+  background: #2563eb;
+  color: #f7fbff;
+  border: 1px solid #31a7ff;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+.source-workspace {
+  display: grid;
+  grid-template-columns: 330px minmax(0, 1fr);
+  min-height: calc(100vh - 80px);
+  background: #f7fbff;
+  color: #081220;
+}
+.source-workspace h1 {
+  font-size: 20px;
+  margin: 0 0 8px;
+}
+.source-workspace h2 {
+  font-size: 26px;
+  margin: 8px 0;
+  line-height: 1.25;
+}
+.source-workspace h3 {
+  font-size: 17px;
+  margin: 0 0 10px;
+}
+.source-workspace p {
+  line-height: 1.55;
+}
+.source-list {
+  padding: 24px 20px;
+  border-right: 1px solid #d8e3ed;
+  background: #edf4fa;
+}
+.source-list nav {
+  max-height: calc(100vh - 330px);
+  overflow: auto;
+  padding: 4px;
+  margin: 0 -4px;
+}
+.source-list label {
+  display: block;
+  margin-top: 24px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.source-list input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #8398ae;
+  border-radius: 5px;
+}
+.source-pr {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 14px 12px;
+  margin: 8px 0;
+  background: white;
+  color: #081220;
+  border: 1px solid #c2d2e2;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.source-pr span {
+  display: block;
+  font-size: 12px;
+  color: #48617b;
+  margin-bottom: 6px;
+}
+.source-pr strong {
+  display: block;
+  font-size: 14px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.source-pr.selected {
+  border-color: #2563eb;
+  box-shadow: inset 3px 0 #2563eb;
+  background: #e8f1ff;
+}
+.source-pr:disabled {
+  cursor: wait;
+}
+.source-detail {
+  min-width: 0;
+  padding: 28px 36px;
+  max-width: 1400px;
+}
+.source-detail section {
+  margin-top: 28px;
+}
+.source-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 20px;
+}
+.source-heading h2 {
+  overflow-wrap: anywhere;
+}
+.source-heading > a {
+  white-space: nowrap;
+  margin-top: 12px;
+}
+.source-muted {
+  color: #48617b;
+  font-size: 13px;
+}
+.source-note {
+  padding: 14px 18px;
+  background: #e6effa;
+  border-left: 3px solid #2563eb;
+  margin: 18px 0;
+  font-size: 14px;
+}
+.source-note p {
+  margin: 8px 0 0;
+}
+.source-error {
+  padding: 16px;
+  border: 1px solid #ad4151;
+  background: #fff0f2;
+  color: #742330;
+}
+.source-check,
+.source-review {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #d8e3ed;
+  font-size: 13px;
+}
+.source-check strong {
+  flex: 1;
+  min-width: 150px;
+}
+.source-file {
+  margin: 10px 0;
+  border: 1px solid #c2d2e2;
+  border-radius: 6px;
+  background: white;
+}
+.source-file summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.source-file summary span:first-child {
+  overflow-wrap: anywhere;
+}
+.source-file summary span:last-child {
+  flex-shrink: 0;
+}
+.source-file p {
+  padding: 0 14px;
+}
+.source-file pre {
+  padding: 16px;
+  margin: 0;
+  background: #081220;
+  color: #d8eefb;
+  max-height: 480px;
+  overflow: auto;
+  font-size: 12px;
+  line-height: 1.65;
+  border-radius: 0 0 5px 5px;
+}
+.source-detail > .source-muted code {
+  overflow-wrap: anywhere;
+}
+.source-workspace a {
+  color: #1855c8;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.source-workspace :focus-visible,
+.source-header :focus-visible {
+  outline: 3px solid #31a7ff;
+  outline-offset: 3px;
+}
+.source-empty {
+  margin: 80px 0;
+}
+@media (max-width: 800px) {
+  .source-header {
+    padding: 12px 16px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .source-brand {
+    min-width: 220px;
+  }
+  .source-workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .source-list {
+    border-right: 0;
+    border-bottom: 1px solid #d8e3ed;
+  }
+  .source-list nav {
+    max-height: 320px;
+    overflow: auto;
+  }
+  .source-detail {
+    padding: 24px 18px;
+  }
+  .source-heading {
+    flex-wrap: wrap;
+  }
+  .source-file summary {
+    flex-wrap: wrap;
+  }
+}

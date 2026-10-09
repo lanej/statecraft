@@ -12,6 +12,8 @@ generate:
 	web/node_modules/.bin/buf generate
 
 check-generated: generate
+	go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@v2.5.1 --config api/github/codegen.yaml api/github/read-only.json
+	git diff --exit-code -- internal/adapters/githubread/generated
 	git diff --exit-code -- gen web/src/gen
 	test -z "$$(git ls-files --others --exclude-standard gen web/src/gen)"
 
@@ -32,3 +34,23 @@ format: format-go
 
 check-format: gofmt-check
 	npm --prefix web run check
+
+.PHONY: readonly build test check github-spec
+readonly:
+	go run ./cmd/statecraft-readonly --local
+
+build:
+	npm --prefix web ci
+	npm --prefix web run build
+	go build ./cmd/statecraft ./cmd/statecraft-readonly
+
+test:
+	go test ./...
+	npm --prefix web test
+
+check: check-format proto-lint test
+	npm --prefix web run build
+
+github-spec:
+	node scripts/github-spec.mjs
+	go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@v2.5.1 --config api/github/codegen.yaml api/github/read-only.json

@@ -10,7 +10,289 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file statecraft/v1/review.proto.
  */
 export const file_statecraft_v1_review: GenFile = /*@__PURE__*/
-  fileDesc("ChpzdGF0ZWNyYWZ0L3YxL3Jldmlldy5wcm90bxINc3RhdGVjcmFmdC52MSIlChBHZXRSZXZpZXdSZXF1ZXN0EhEKCXJldmlld19pZBgBIAEoCSI6ChFHZXRSZXZpZXdSZXNwb25zZRIlCgZyZXZpZXcYASABKAsyFS5zdGF0ZWNyYWZ0LnYxLlJldmlldyK0BQoGUmV2aWV3EgoKAmlkGAEgASgJEhIKCnJlcG9zaXRvcnkYAiABKAkSFAoMcHVsbF9yZXF1ZXN0GAMgASgDEg0KBXRpdGxlGAQgASgJEhAKCGhlYWRfc2hhGAUgASgJEg0KBXN0YXRlGAYgASgJEiIKBXJvb3RzGAcgAygLMhMuc3RhdGVjcmFmdC52MS5Sb290EiYKB2NoYW5nZXMYCCADKAsyFS5zdGF0ZWNyYWZ0LnYxLkNoYW5nZRIoCghmaW5kaW5ncxgJIAMoCzIWLnN0YXRlY3JhZnQudjEuRmluZGluZxIwCglkZWNpc2lvbnMYCiADKAsyHS5zdGF0ZWNyYWZ0LnYxLlJldmlld0RlY2lzaW9uEgwKBGRlbW8YCyABKAgSDwoHdmVyc2lvbhgMIAEoBBIQCghzY2VuYXJpbxgNIAEoCRIpCgRwbGFuGA4gASgLMhsuc3RhdGVjcmFmdC52MS5QbGFuU25hcHNob3QSLwoGcG9saWN5GA8gASgLMh8uc3RhdGVjcmFmdC52MS5Qb2xpY3lFdmFsdWF0aW9uEjcKC2FjY2VwdGFuY2VzGBAgAygLMiIuc3RhdGVjcmFmdC52MS5WaW9sYXRpb25BY2NlcHRhbmNlEjAKCGF0dGVtcHRzGBEgAygLMh4uc3RhdGVjcmFmdC52MS5FeGVjdXRpb25SZWNvcmQSKwoHaGlzdG9yeRgSIAMoCzIaLnN0YXRlY3JhZnQudjEuUmV2aWV3RXZlbnQSMQoMcGxhbl9oaXN0b3J5GBMgAygLMhsuc3RhdGVjcmFmdC52MS5QbGFuU25hcHNob3QSLgoHYWN0aW9ucxgUIAMoCzIdLnN0YXRlY3JhZnQudjEuQWN0aW9uRGVjaXNpb24SFAoMdmVyaWZpY2F0aW9uGBUgASgJIlMKBFJvb3QSCgoCaWQYASABKAkSDAoEbmFtZRgCIAEoCRIOCgZzdGF0dXMYAyABKAkSFAoMYXBwbHlfc3RhdHVzGAQgASgJEgsKA2xvZxgFIAEoCSK2AgoGQ2hhbmdlEgoKAmlkGAEgASgJEg8KB3Jvb3RfaWQYAiABKAkSDwoHYWRkcmVzcxgDIAEoCRIVCg1yZXNvdXJjZV90eXBlGAQgASgJEg4KBmFjdGlvbhgFIAEoCRIMCgRyaXNrGAYgASgJEg8KB3N1bW1hcnkYByABKAkSDAoEbmFtZRgIIAEoCRIxCgpwcm9wZXJ0aWVzGAkgAygLMh0uc3RhdGVjcmFmdC52MS5Qcm9wZXJ0eUNoYW5nZRI6Cg1yZWxhdGlvbnNoaXBzGAogAygLMiMuc3RhdGVjcmFmdC52MS5SZXNvdXJjZVJlbGF0aW9uc2hpcBIRCglwbGFuX3RleHQYCyABKAkSEwoLc291cmNlX3BhdGgYDCABKAkSEwoLc291cmNlX3RleHQYDSABKAkidAoHRmluZGluZxIKCgJpZBgBIAEoCRIQCghzZXZlcml0eRgCIAEoCRIQCghjYXRlZ29yeRgDIAEoCRINCgV0aXRsZRgEIAEoCRIYChByZXNvdXJjZV9hZGRyZXNzGAUgASgJEhAKCGJsb2NraW5nGAYgASgIIrsBCg5SZXZpZXdEZWNpc2lvbhINCgVhY3RvchgBIAEoCRIQCghkZWNpc2lvbhgCIAEoCRITCgtwbGFuX3NldF9pZBgDIAEoCRISCgpjcmVhdGVkX2F0GAQgASgJEhIKCmNvbW1pdF9zaGEYBSABKAkSEwoLZXh0ZXJuYWxfaWQYBiABKAkSDgoGc291cmNlGAcgASgJEhUKDWV2YWx1YXRpb25faWQYCCABKAkSDwoHbWVzc2FnZRgJIAEoCSI9Cg5Qcm9wZXJ0eUNoYW5nZRIMCgRuYW1lGAEgASgJEg4KBmJlZm9yZRgCIAEoCRINCgVhZnRlchgDIAEoCSJaChRSZXNvdXJjZVJlbGF0aW9uc2hpcBITCgtyZXNvdXJjZV9pZBgBIAEoCRINCgVsYWJlbBgCIAEoCRIMCgRraW5kGAMgASgJEhAKCGV2aWRlbmNlGAQgASgJIogBCgxQbGFuU25hcHNob3QSCgoCaWQYASABKAkSDgoGbnVtYmVyGAIgASgFEhIKCmNvbW1pdF9zaGEYAyABKAkSDgoGZGlnZXN0GAQgASgJEhAKCHJvb3RfaWRzGAUgAygJEhIKCmNyZWF0ZWRfYXQYBiABKAkSEgoKY2hhbmdlX2lkcxgHIAMoCSJLCgxQb2xpY3lSZXN1bHQSCgoCaWQYASABKAkSDwoHdmVyc2lvbhgCIAEoCRINCgV0aXRsZRgDIAEoCRIPCgdvdXRjb21lGAQgASgJIvkBCg9Qb2xpY3lWaW9sYXRpb24SCgoCaWQYASABKAkSEQoJcG9saWN5X2lkGAIgASgJEhYKDnBvbGljeV92ZXJzaW9uGAMgASgJEhMKC3Jlc291cmNlX2lkGAQgASgJEg0KBXRpdGxlGAUgASgJEhAKCHNldmVyaXR5GAYgASgJEhAKCGJsb2NraW5nGAcgASgIEhoKEmFjY2VwdGFuY2VfYWxsb3dlZBgIIAEoCBITCgtleHBsYW5hdGlvbhgJIAEoCRITCgtjb25zZXF1ZW5jZRgKIAEoCRIPCgd1bmtub3duGAsgASgJEhAKCGV2aWRlbmNlGAwgAygJIuQBChBQb2xpY3lFdmFsdWF0aW9uEgoKAmlkGAEgASgJEhMKC3BsYW5fc2V0X2lkGAIgASgJEhUKDXBvbGljeV9zZXRfaWQYAyABKAkSDgoGc3RhdHVzGAQgASgJEhAKCGNvdmVyYWdlGAUgASgJEhQKDGV2YWx1YXRlZF9hdBgGIAEoCRIsCgdyZXN1bHRzGAcgAygLMhsuc3RhdGVjcmFmdC52MS5Qb2xpY3lSZXN1bHQSMgoKdmlvbGF0aW9ucxgIIAMoCzIeLnN0YXRlY3JhZnQudjEuUG9saWN5VmlvbGF0aW9uIoICChNWaW9sYXRpb25BY2NlcHRhbmNlEgoKAmlkGAEgASgJEhQKDHZpb2xhdGlvbl9pZBgCIAEoCRITCgtwbGFuX3NldF9pZBgDIAEoCRIVCg1ldmFsdWF0aW9uX2lkGAQgASgJEhYKDnBvbGljeV92ZXJzaW9uGAUgASgJEg4KBnN0YXR1cxgGIAEoCRIUCgxyZXF1ZXN0ZWRfYnkYByABKAkSFQoNYXV0aG9yaXplZF9ieRgIIAEoCRIOCgZyZWFzb24YCSABKAkSEAoIZXZpZGVuY2UYCiABKAkSEgoKY3JlYXRlZF9hdBgLIAEoCRISCgpleHBpcmVzX2F0GAwgASgJIkEKDkFjdGlvbkRlY2lzaW9uEg4KBmFjdGlvbhgBIAEoCRIPCgdvdXRjb21lGAIgASgJEg4KBnJlYXNvbhgDIAEoCSJzCg9Xb3JrZmxvd0NvbW1hbmQSDgoGYWN0aW9uGAEgASgJEhgKEGV4cGVjdGVkX3ZlcnNpb24YAiABKAQSFAoMdmlvbGF0aW9uX2lkGAMgASgJEg4KBnJlYXNvbhgEIAEoCRIQCghldmlkZW5jZRgFIAEoCSKHAQoPRXhlY3V0aW9uUmVjb3JkEgoKAmlkGAEgASgJEhMKC3BsYW5fc2V0X2lkGAIgASgJEg8KB3Jvb3RfaWQYAyABKAkSEQoJb3BlcmF0aW9uGAQgASgJEg4KBnN0YXR1cxgFIAEoCRISCgpjcmVhdGVkX2F0GAYgASgJEgsKA2xvZxgHIAEoCSJACgtSZXZpZXdFdmVudBINCgV0aXRsZRgBIAEoCRIOCgZkZXRhaWwYAiABKAkSEgoKY3JlYXRlZF9hdBgDIAEoCSIlChFDcmVhdGVEZW1vUmVxdWVzdBIQCghzY2VuYXJpbxgBIAEoCSJWChBBY3RPbkRlbW9SZXF1ZXN0EhEKCXJldmlld19pZBgBIAEoCRIvCgdjb21tYW5kGAIgASgLMh4uc3RhdGVjcmFmdC52MS5Xb3JrZmxvd0NvbW1hbmQiOwoSQ3JlYXRlRGVtb1Jlc3BvbnNlEiUKBnJldmlldxgBIAEoCzIVLnN0YXRlY3JhZnQudjEuUmV2aWV3IiMKDkdldERlbW9SZXF1ZXN0EhEKCXJldmlld19pZBgBIAEoCSI4Cg9HZXREZW1vUmVzcG9uc2USJQoGcmV2aWV3GAEgASgLMhUuc3RhdGVjcmFmdC52MS5SZXZpZXciOgoRQWN0T25EZW1vUmVzcG9uc2USJQoGcmV2aWV3GAEgASgLMhUuc3RhdGVjcmFmdC52MS5SZXZpZXcyXwoNUmV2aWV3U2VydmljZRJOCglHZXRSZXZpZXcSHy5zdGF0ZWNyYWZ0LnYxLkdldFJldmlld1JlcXVlc3QaIC5zdGF0ZWNyYWZ0LnYxLkdldFJldmlld1Jlc3BvbnNlMoICChNEZW1vV29ya2Zsb3dTZXJ2aWNlElEKCkNyZWF0ZURlbW8SIC5zdGF0ZWNyYWZ0LnYxLkNyZWF0ZURlbW9SZXF1ZXN0GiEuc3RhdGVjcmFmdC52MS5DcmVhdGVEZW1vUmVzcG9uc2USSAoHR2V0RGVtbxIdLnN0YXRlY3JhZnQudjEuR2V0RGVtb1JlcXVlc3QaHi5zdGF0ZWNyYWZ0LnYxLkdldERlbW9SZXNwb25zZRJOCglBY3RPbkRlbW8SHy5zdGF0ZWNyYWZ0LnYxLkFjdE9uRGVtb1JlcXVlc3QaIC5zdGF0ZWNyYWZ0LnYxLkFjdE9uRGVtb1Jlc3BvbnNlQjxaOmdpdGh1Yi5jb20vbGFuZWovc3RhdGVjcmFmdC9nZW4vc3RhdGVjcmFmdC92MTtzdGF0ZWNyYWZ0djFiBnByb3RvMw");
+  fileDesc("ChpzdGF0ZWNyYWZ0L3YxL3Jldmlldy5wcm90bxINc3RhdGVjcmFmdC52MSIUChJMaXN0Q2hhbmdlc1JlcXVlc3QihgEKE0xpc3RDaGFuZ2VzUmVzcG9uc2USEgoKcmVwb3NpdG9yeRgBIAEoCRIzCg5zb3VyY2VfY2hhbmdlcxgCIAMoCzIbLnN0YXRlY3JhZnQudjEuU291cmNlQ2hhbmdlEhEKCXRydW5jYXRlZBgDIAEoCBITCgtjYXB0dXJlZF9hdBgEIAEoCSIwChhHZXRTb3VyY2VFdmlkZW5jZVJlcXVlc3QSFAoMcHVsbF9yZXF1ZXN0GAEgASgDIokCChlHZXRTb3VyY2VFdmlkZW5jZVJlc3BvbnNlEjIKDXNvdXJjZV9jaGFuZ2UYASABKAsyGy5zdGF0ZWNyYWZ0LnYxLlNvdXJjZUNoYW5nZRIoCgVmaWxlcxgCIAMoCzIZLnN0YXRlY3JhZnQudjEuU291cmNlRmlsZRIzCg5zb3VyY2VfcmV2aWV3cxgDIAMoCzIbLnN0YXRlY3JhZnQudjEuU291cmNlUmV2aWV3EioKBmNoZWNrcxgEIAMoCzIaLnN0YXRlY3JhZnQudjEuU291cmNlQ2hlY2sSEwoLY2FwdHVyZWRfYXQYBSABKAkSGAoQY2hlY2tzX3RydW5jYXRlZBgGIAEoCCKgAQoMU291cmNlQ2hhbmdlEhIKCnJlcG9zaXRvcnkYASABKAkSDgoGbnVtYmVyGAIgASgDEg0KBXRpdGxlGAMgASgJEg4KBmF1dGhvchgEIAEoCRIQCghoZWFkX3NoYRgFIAEoCRIQCghiYXNlX3JlZhgGIAEoCRINCgVzdGF0ZRgHIAEoCRINCgVkcmFmdBgIIAEoCBILCgN1cmwYCSABKAkijwEKClNvdXJjZUZpbGUSDAoEcGF0aBgBIAEoCRIVCg1wcmV2aW91c19wYXRoGAIgASgJEg4KBnN0YXR1cxgDIAEoCRIRCglhZGRpdGlvbnMYBCABKAMSEQoJZGVsZXRpb25zGAUgASgDEg0KBXBhdGNoGAYgASgJEhcKD3BhdGNoX2F2YWlsYWJsZRgHIAEoCCJkCgxTb3VyY2VSZXZpZXcSDQoFYWN0b3IYASABKAkSEAoIZGVjaXNpb24YAiABKAkSEgoKY29tbWl0X3NoYRgDIAEoCRISCgpjcmVhdGVkX2F0GAQgASgJEgsKA3VybBgFIAEoCSJlCgtTb3VyY2VDaGVjaxIMCgRuYW1lGAEgASgJEg4KBnN0YXR1cxgCIAEoCRISCgpjb25jbHVzaW9uGAMgASgJEgsKA3VybBgEIAEoCRIXCg9ldmlkZW5jZV9zb3VyY2UYBSABKAkiJQoQR2V0UmV2aWV3UmVxdWVzdBIRCglyZXZpZXdfaWQYASABKAkiOgoRR2V0UmV2aWV3UmVzcG9uc2USJQoGcmV2aWV3GAEgASgLMhUuc3RhdGVjcmFmdC52MS5SZXZpZXcitAUKBlJldmlldxIKCgJpZBgBIAEoCRISCgpyZXBvc2l0b3J5GAIgASgJEhQKDHB1bGxfcmVxdWVzdBgDIAEoAxINCgV0aXRsZRgEIAEoCRIQCghoZWFkX3NoYRgFIAEoCRINCgVzdGF0ZRgGIAEoCRIiCgVyb290cxgHIAMoCzITLnN0YXRlY3JhZnQudjEuUm9vdBImCgdjaGFuZ2VzGAggAygLMhUuc3RhdGVjcmFmdC52MS5DaGFuZ2USKAoIZmluZGluZ3MYCSADKAsyFi5zdGF0ZWNyYWZ0LnYxLkZpbmRpbmcSMAoJZGVjaXNpb25zGAogAygLMh0uc3RhdGVjcmFmdC52MS5SZXZpZXdEZWNpc2lvbhIMCgRkZW1vGAsgASgIEg8KB3ZlcnNpb24YDCABKAQSEAoIc2NlbmFyaW8YDSABKAkSKQoEcGxhbhgOIAEoCzIbLnN0YXRlY3JhZnQudjEuUGxhblNuYXBzaG90Ei8KBnBvbGljeRgPIAEoCzIfLnN0YXRlY3JhZnQudjEuUG9saWN5RXZhbHVhdGlvbhI3CgthY2NlcHRhbmNlcxgQIAMoCzIiLnN0YXRlY3JhZnQudjEuVmlvbGF0aW9uQWNjZXB0YW5jZRIwCghhdHRlbXB0cxgRIAMoCzIeLnN0YXRlY3JhZnQudjEuRXhlY3V0aW9uUmVjb3JkEisKB2hpc3RvcnkYEiADKAsyGi5zdGF0ZWNyYWZ0LnYxLlJldmlld0V2ZW50EjEKDHBsYW5faGlzdG9yeRgTIAMoCzIbLnN0YXRlY3JhZnQudjEuUGxhblNuYXBzaG90Ei4KB2FjdGlvbnMYFCADKAsyHS5zdGF0ZWNyYWZ0LnYxLkFjdGlvbkRlY2lzaW9uEhQKDHZlcmlmaWNhdGlvbhgVIAEoCSJTCgRSb290EgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSDgoGc3RhdHVzGAMgASgJEhQKDGFwcGx5X3N0YXR1cxgEIAEoCRILCgNsb2cYBSABKAkitgIKBkNoYW5nZRIKCgJpZBgBIAEoCRIPCgdyb290X2lkGAIgASgJEg8KB2FkZHJlc3MYAyABKAkSFQoNcmVzb3VyY2VfdHlwZRgEIAEoCRIOCgZhY3Rpb24YBSABKAkSDAoEcmlzaxgGIAEoCRIPCgdzdW1tYXJ5GAcgASgJEgwKBG5hbWUYCCABKAkSMQoKcHJvcGVydGllcxgJIAMoCzIdLnN0YXRlY3JhZnQudjEuUHJvcGVydHlDaGFuZ2USOgoNcmVsYXRpb25zaGlwcxgKIAMoCzIjLnN0YXRlY3JhZnQudjEuUmVzb3VyY2VSZWxhdGlvbnNoaXASEQoJcGxhbl90ZXh0GAsgASgJEhMKC3NvdXJjZV9wYXRoGAwgASgJEhMKC3NvdXJjZV90ZXh0GA0gASgJInQKB0ZpbmRpbmcSCgoCaWQYASABKAkSEAoIc2V2ZXJpdHkYAiABKAkSEAoIY2F0ZWdvcnkYAyABKAkSDQoFdGl0bGUYBCABKAkSGAoQcmVzb3VyY2VfYWRkcmVzcxgFIAEoCRIQCghibG9ja2luZxgGIAEoCCK7AQoOUmV2aWV3RGVjaXNpb24SDQoFYWN0b3IYASABKAkSEAoIZGVjaXNpb24YAiABKAkSEwoLcGxhbl9zZXRfaWQYAyABKAkSEgoKY3JlYXRlZF9hdBgEIAEoCRISCgpjb21taXRfc2hhGAUgASgJEhMKC2V4dGVybmFsX2lkGAYgASgJEg4KBnNvdXJjZRgHIAEoCRIVCg1ldmFsdWF0aW9uX2lkGAggASgJEg8KB21lc3NhZ2UYCSABKAkiPQoOUHJvcGVydHlDaGFuZ2USDAoEbmFtZRgBIAEoCRIOCgZiZWZvcmUYAiABKAkSDQoFYWZ0ZXIYAyABKAkiWgoUUmVzb3VyY2VSZWxhdGlvbnNoaXASEwoLcmVzb3VyY2VfaWQYASABKAkSDQoFbGFiZWwYAiABKAkSDAoEa2luZBgDIAEoCRIQCghldmlkZW5jZRgEIAEoCSKIAQoMUGxhblNuYXBzaG90EgoKAmlkGAEgASgJEg4KBm51bWJlchgCIAEoBRISCgpjb21taXRfc2hhGAMgASgJEg4KBmRpZ2VzdBgEIAEoCRIQCghyb290X2lkcxgFIAMoCRISCgpjcmVhdGVkX2F0GAYgASgJEhIKCmNoYW5nZV9pZHMYByADKAkiSwoMUG9saWN5UmVzdWx0EgoKAmlkGAEgASgJEg8KB3ZlcnNpb24YAiABKAkSDQoFdGl0bGUYAyABKAkSDwoHb3V0Y29tZRgEIAEoCSL5AQoPUG9saWN5VmlvbGF0aW9uEgoKAmlkGAEgASgJEhEKCXBvbGljeV9pZBgCIAEoCRIWCg5wb2xpY3lfdmVyc2lvbhgDIAEoCRITCgtyZXNvdXJjZV9pZBgEIAEoCRINCgV0aXRsZRgFIAEoCRIQCghzZXZlcml0eRgGIAEoCRIQCghibG9ja2luZxgHIAEoCBIaChJhY2NlcHRhbmNlX2FsbG93ZWQYCCABKAgSEwoLZXhwbGFuYXRpb24YCSABKAkSEwoLY29uc2VxdWVuY2UYCiABKAkSDwoHdW5rbm93bhgLIAEoCRIQCghldmlkZW5jZRgMIAMoCSLkAQoQUG9saWN5RXZhbHVhdGlvbhIKCgJpZBgBIAEoCRITCgtwbGFuX3NldF9pZBgCIAEoCRIVCg1wb2xpY3lfc2V0X2lkGAMgASgJEg4KBnN0YXR1cxgEIAEoCRIQCghjb3ZlcmFnZRgFIAEoCRIUCgxldmFsdWF0ZWRfYXQYBiABKAkSLAoHcmVzdWx0cxgHIAMoCzIbLnN0YXRlY3JhZnQudjEuUG9saWN5UmVzdWx0EjIKCnZpb2xhdGlvbnMYCCADKAsyHi5zdGF0ZWNyYWZ0LnYxLlBvbGljeVZpb2xhdGlvbiKCAgoTVmlvbGF0aW9uQWNjZXB0YW5jZRIKCgJpZBgBIAEoCRIUCgx2aW9sYXRpb25faWQYAiABKAkSEwoLcGxhbl9zZXRfaWQYAyABKAkSFQoNZXZhbHVhdGlvbl9pZBgEIAEoCRIWCg5wb2xpY3lfdmVyc2lvbhgFIAEoCRIOCgZzdGF0dXMYBiABKAkSFAoMcmVxdWVzdGVkX2J5GAcgASgJEhUKDWF1dGhvcml6ZWRfYnkYCCABKAkSDgoGcmVhc29uGAkgASgJEhAKCGV2aWRlbmNlGAogASgJEhIKCmNyZWF0ZWRfYXQYCyABKAkSEgoKZXhwaXJlc19hdBgMIAEoCSJBCg5BY3Rpb25EZWNpc2lvbhIOCgZhY3Rpb24YASABKAkSDwoHb3V0Y29tZRgCIAEoCRIOCgZyZWFzb24YAyABKAkicwoPV29ya2Zsb3dDb21tYW5kEg4KBmFjdGlvbhgBIAEoCRIYChBleHBlY3RlZF92ZXJzaW9uGAIgASgEEhQKDHZpb2xhdGlvbl9pZBgDIAEoCRIOCgZyZWFzb24YBCABKAkSEAoIZXZpZGVuY2UYBSABKAkihwEKD0V4ZWN1dGlvblJlY29yZBIKCgJpZBgBIAEoCRITCgtwbGFuX3NldF9pZBgCIAEoCRIPCgdyb290X2lkGAMgASgJEhEKCW9wZXJhdGlvbhgEIAEoCRIOCgZzdGF0dXMYBSABKAkSEgoKY3JlYXRlZF9hdBgGIAEoCRILCgNsb2cYByABKAkiQAoLUmV2aWV3RXZlbnQSDQoFdGl0bGUYASABKAkSDgoGZGV0YWlsGAIgASgJEhIKCmNyZWF0ZWRfYXQYAyABKAkiJQoRQ3JlYXRlRGVtb1JlcXVlc3QSEAoIc2NlbmFyaW8YASABKAkiVgoQQWN0T25EZW1vUmVxdWVzdBIRCglyZXZpZXdfaWQYASABKAkSLwoHY29tbWFuZBgCIAEoCzIeLnN0YXRlY3JhZnQudjEuV29ya2Zsb3dDb21tYW5kIjsKEkNyZWF0ZURlbW9SZXNwb25zZRIlCgZyZXZpZXcYASABKAsyFS5zdGF0ZWNyYWZ0LnYxLlJldmlldyIjCg5HZXREZW1vUmVxdWVzdBIRCglyZXZpZXdfaWQYASABKAkiOAoPR2V0RGVtb1Jlc3BvbnNlEiUKBnJldmlldxgBIAEoCzIVLnN0YXRlY3JhZnQudjEuUmV2aWV3IjoKEUFjdE9uRGVtb1Jlc3BvbnNlEiUKBnJldmlldxgBIAEoCzIVLnN0YXRlY3JhZnQudjEuUmV2aWV3MtUBChVTb3VyY2VFdmlkZW5jZVNlcnZpY2USVAoLTGlzdENoYW5nZXMSIS5zdGF0ZWNyYWZ0LnYxLkxpc3RDaGFuZ2VzUmVxdWVzdBoiLnN0YXRlY3JhZnQudjEuTGlzdENoYW5nZXNSZXNwb25zZRJmChFHZXRTb3VyY2VFdmlkZW5jZRInLnN0YXRlY3JhZnQudjEuR2V0U291cmNlRXZpZGVuY2VSZXF1ZXN0Giguc3RhdGVjcmFmdC52MS5HZXRTb3VyY2VFdmlkZW5jZVJlc3BvbnNlMl8KDVJldmlld1NlcnZpY2USTgoJR2V0UmV2aWV3Eh8uc3RhdGVjcmFmdC52MS5HZXRSZXZpZXdSZXF1ZXN0GiAuc3RhdGVjcmFmdC52MS5HZXRSZXZpZXdSZXNwb25zZTKCAgoTRGVtb1dvcmtmbG93U2VydmljZRJRCgpDcmVhdGVEZW1vEiAuc3RhdGVjcmFmdC52MS5DcmVhdGVEZW1vUmVxdWVzdBohLnN0YXRlY3JhZnQudjEuQ3JlYXRlRGVtb1Jlc3BvbnNlEkgKB0dldERlbW8SHS5zdGF0ZWNyYWZ0LnYxLkdldERlbW9SZXF1ZXN0Gh4uc3RhdGVjcmFmdC52MS5HZXREZW1vUmVzcG9uc2USTgoJQWN0T25EZW1vEh8uc3RhdGVjcmFmdC52MS5BY3RPbkRlbW9SZXF1ZXN0GiAuc3RhdGVjcmFmdC52MS5BY3RPbkRlbW9SZXNwb25zZUI8WjpnaXRodWIuY29tL2xhbmVqL3N0YXRlY3JhZnQvZ2VuL3N0YXRlY3JhZnQvdjE7c3RhdGVjcmFmdHYxYgZwcm90bzM");
+
+/**
+ * @generated from message statecraft.v1.ListChangesRequest
+ */
+export type ListChangesRequest = Message<"statecraft.v1.ListChangesRequest"> & {
+};
+
+/**
+ * Describes the message statecraft.v1.ListChangesRequest.
+ * Use `create(ListChangesRequestSchema)` to create a new message.
+ */
+export const ListChangesRequestSchema: GenMessage<ListChangesRequest> = /*@__PURE__*/
+  messageDesc(file_statecraft_v1_review, 0);
+
+/**
+ * @generated from message statecraft.v1.ListChangesResponse
+ */
+export type ListChangesResponse = Message<"statecraft.v1.ListChangesResponse"> & {
+  /**
+   * @generated from field: string repository = 1;
+   */
+  repository: string;
+
+  /**
+   * @generated from field: repeated statecraft.v1.SourceChange source_changes = 2;
+   */
+  sourceChanges: SourceChange[];
+
+  /**
+   * @generated from field: bool truncated = 3;
+   */
+  truncated: boolean;
+
+  /**
+   * @generated from field: string captured_at = 4;
+   */
+  capturedAt: string;
+};
+
+/**
+ * Describes the message statecraft.v1.ListChangesResponse.
+ * Use `create(ListChangesResponseSchema)` to create a new message.
+ */
+export const ListChangesResponseSchema: GenMessage<ListChangesResponse> = /*@__PURE__*/
+  messageDesc(file_statecraft_v1_review, 1);
+
+/**
+ * @generated from message statecraft.v1.GetSourceEvidenceRequest
+ */
+export type GetSourceEvidenceRequest = Message<"statecraft.v1.GetSourceEvidenceRequest"> & {
+  /**
+   * @generated from field: int64 pull_request = 1;
+   */
+  pullRequest: bigint;
+};
+
+/**
+ * Describes the message statecraft.v1.GetSourceEvidenceRequest.
+ * Use `create(GetSourceEvidenceRequestSchema)` to create a new message.
+ */
+export const GetSourceEvidenceRequestSchema: GenMessage<GetSourceEvidenceRequest> = /*@__PURE__*/
+  messageDesc(file_statecraft_v1_review, 2);
+
+/**
+ * @generated from message statecraft.v1.GetSourceEvidenceResponse
+ */
+export type GetSourceEvidenceResponse = Message<"statecraft.v1.GetSourceEvidenceResponse"> & {
+  /**
+   * @generated from field: statecraft.v1.SourceChange source_change = 1;
+   */
+  sourceChange?: SourceChange | undefined;
+
+  /**
+   * @generated from field: repeated statecraft.v1.SourceFile files = 2;
+   */
+  files: SourceFile[];
+
+  /**
+   * @generated from field: repeated statecraft.v1.SourceReview source_reviews = 3;
+   */
+  sourceReviews: SourceReview[];
+
+  /**
+   * @generated from field: repeated statecraft.v1.SourceCheck checks = 4;
+   */
+  checks: SourceCheck[];
+
+  /**
+   * @generated from field: string captured_at = 5;
+   */
+  capturedAt: string;
+
+  /**
+   * @generated from field: bool checks_truncated = 6;
+   */
+  checksTruncated: boolean;
+};
+
+/**
+ * Describes the message statecraft.v1.GetSourceEvidenceResponse.
+ * Use `create(GetSourceEvidenceResponseSchema)` to create a new message.
+ */
+export const GetSourceEvidenceResponseSchema: GenMessage<GetSourceEvidenceResponse> = /*@__PURE__*/
+  messageDesc(file_statecraft_v1_review, 3);
+
+/**
+ * @generated from message statecraft.v1.SourceChange
+ */
+export type SourceChange = Message<"statecraft.v1.SourceChange"> & {
+  /**
+   * @generated from field: string repository = 1;
+   */
+  repository: string;
+
+  /**
+   * @generated from field: int64 number = 2;
+   */
+  number: bigint;
+
+  /**
+   * @generated from field: string title = 3;
+   */
+  title: string;
+
+  /**
+   * @generated from field: string author = 4;
+   */
+  author: string;
+
+  /**
+   * @generated from field: string head_sha = 5;
+   */
+  headSha: string;
+
+  /**
+   * @generated from field: string base_ref = 6;
+   */
+  baseRef: string;
+
+  /**
+   * @generated from field: string state = 7;
+   */
+  state: string;
+
+  /**
+   * @generated from field: bool draft = 8;
+   */
+  draft: boolean;
+
+  /**
+   * @generated from field: string url = 9;
+   */
+  url: string;
+};
+
+/**
+ * Describes the message statecraft.v1.SourceChange.
+ * Use `create(SourceChangeSchema)` to create a new message.
+ */
+export const SourceChangeSchema: GenMessage<SourceChange> = /*@__PURE__*/
+  messageDesc(file_statecraft_v1_review, 4);
+
+/**
+ * @generated from message statecraft.v1.SourceFile
+ */
+export type SourceFile = Message<"statecraft.v1.SourceFile"> & {
+  /**
+   * @generated from field: string path = 1;
+   */
+  path: string;
+
+  /**
+   * @generated from field: string previous_path = 2;
+   */
+  previousPath: string;
+
+  /**
+   * @generated from field: string status = 3;
+   */
+  status: string;
+
+  /**
+   * @generated from field: int64 additions = 4;
+   */
+  additions: bigint;
+
+  /**
+   * @generated from field: int64 deletions = 5;
+   */
+  deletions: bigint;
+
+  /**
+   * @generated from field: string patch = 6;
+   */
+  patch: string;
+
+  /**
+   * @generated from field: bool patch_available = 7;
+   */
+  patchAvailable: boolean;
+};
+
+/**
+ * Describes the message statecraft.v1.SourceFile.
+ * Use `create(SourceFileSchema)` to create a new message.
+ */
+export const SourceFileSchema: GenMessage<SourceFile> = /*@__PURE__*/
+  messageDesc(file_statecraft_v1_review, 5);
+
+/**
+ * @generated from message statecraft.v1.SourceReview
+ */
+export type SourceReview = Message<"statecraft.v1.SourceReview"> & {
+  /**
+   * @generated from field: string actor = 1;
+   */
+  actor: string;
+
+  /**
+   * @generated from field: string decision = 2;
+   */
+  decision: string;
+
+  /**
+   * @generated from field: string commit_sha = 3;
+   */
+  commitSha: string;
+
+  /**
+   * @generated from field: string created_at = 4;
+   */
+  createdAt: string;
+
+  /**
+   * @generated from field: string url = 5;
+   */
+  url: string;
+};
+
+/**
+ * Describes the message statecraft.v1.SourceReview.
+ * Use `create(SourceReviewSchema)` to create a new message.
+ */
+export const SourceReviewSchema: GenMessage<SourceReview> = /*@__PURE__*/
+  messageDesc(file_statecraft_v1_review, 6);
+
+/**
+ * @generated from message statecraft.v1.SourceCheck
+ */
+export type SourceCheck = Message<"statecraft.v1.SourceCheck"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * @generated from field: string status = 2;
+   */
+  status: string;
+
+  /**
+   * @generated from field: string conclusion = 3;
+   */
+  conclusion: string;
+
+  /**
+   * @generated from field: string url = 4;
+   */
+  url: string;
+
+  /**
+   * @generated from field: string evidence_source = 5;
+   */
+  evidenceSource: string;
+};
+
+/**
+ * Describes the message statecraft.v1.SourceCheck.
+ * Use `create(SourceCheckSchema)` to create a new message.
+ */
+export const SourceCheckSchema: GenMessage<SourceCheck> = /*@__PURE__*/
+  messageDesc(file_statecraft_v1_review, 7);
 
 /**
  * @generated from message statecraft.v1.GetReviewRequest
@@ -27,7 +309,7 @@ export type GetReviewRequest = Message<"statecraft.v1.GetReviewRequest"> & {
  * Use `create(GetReviewRequestSchema)` to create a new message.
  */
 export const GetReviewRequestSchema: GenMessage<GetReviewRequest> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 0);
+  messageDesc(file_statecraft_v1_review, 8);
 
 /**
  * @generated from message statecraft.v1.GetReviewResponse
@@ -44,7 +326,7 @@ export type GetReviewResponse = Message<"statecraft.v1.GetReviewResponse"> & {
  * Use `create(GetReviewResponseSchema)` to create a new message.
  */
 export const GetReviewResponseSchema: GenMessage<GetReviewResponse> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 1);
+  messageDesc(file_statecraft_v1_review, 9);
 
 /**
  * @generated from message statecraft.v1.Review
@@ -161,7 +443,7 @@ export type Review = Message<"statecraft.v1.Review"> & {
  * Use `create(ReviewSchema)` to create a new message.
  */
 export const ReviewSchema: GenMessage<Review> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 2);
+  messageDesc(file_statecraft_v1_review, 10);
 
 /**
  * @generated from message statecraft.v1.Root
@@ -198,7 +480,7 @@ export type Root = Message<"statecraft.v1.Root"> & {
  * Use `create(RootSchema)` to create a new message.
  */
 export const RootSchema: GenMessage<Root> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 3);
+  messageDesc(file_statecraft_v1_review, 11);
 
 /**
  * @generated from message statecraft.v1.Change
@@ -275,7 +557,7 @@ export type Change = Message<"statecraft.v1.Change"> & {
  * Use `create(ChangeSchema)` to create a new message.
  */
 export const ChangeSchema: GenMessage<Change> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 4);
+  messageDesc(file_statecraft_v1_review, 12);
 
 /**
  * @generated from message statecraft.v1.Finding
@@ -317,7 +599,7 @@ export type Finding = Message<"statecraft.v1.Finding"> & {
  * Use `create(FindingSchema)` to create a new message.
  */
 export const FindingSchema: GenMessage<Finding> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 5);
+  messageDesc(file_statecraft_v1_review, 13);
 
 /**
  * @generated from message statecraft.v1.ReviewDecision
@@ -374,7 +656,7 @@ export type ReviewDecision = Message<"statecraft.v1.ReviewDecision"> & {
  * Use `create(ReviewDecisionSchema)` to create a new message.
  */
 export const ReviewDecisionSchema: GenMessage<ReviewDecision> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 6);
+  messageDesc(file_statecraft_v1_review, 14);
 
 /**
  * @generated from message statecraft.v1.PropertyChange
@@ -401,7 +683,7 @@ export type PropertyChange = Message<"statecraft.v1.PropertyChange"> & {
  * Use `create(PropertyChangeSchema)` to create a new message.
  */
 export const PropertyChangeSchema: GenMessage<PropertyChange> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 7);
+  messageDesc(file_statecraft_v1_review, 15);
 
 /**
  * @generated from message statecraft.v1.ResourceRelationship
@@ -433,7 +715,7 @@ export type ResourceRelationship = Message<"statecraft.v1.ResourceRelationship">
  * Use `create(ResourceRelationshipSchema)` to create a new message.
  */
 export const ResourceRelationshipSchema: GenMessage<ResourceRelationship> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 8);
+  messageDesc(file_statecraft_v1_review, 16);
 
 /**
  * @generated from message statecraft.v1.PlanSnapshot
@@ -480,7 +762,7 @@ export type PlanSnapshot = Message<"statecraft.v1.PlanSnapshot"> & {
  * Use `create(PlanSnapshotSchema)` to create a new message.
  */
 export const PlanSnapshotSchema: GenMessage<PlanSnapshot> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 9);
+  messageDesc(file_statecraft_v1_review, 17);
 
 /**
  * @generated from message statecraft.v1.PolicyResult
@@ -512,7 +794,7 @@ export type PolicyResult = Message<"statecraft.v1.PolicyResult"> & {
  * Use `create(PolicyResultSchema)` to create a new message.
  */
 export const PolicyResultSchema: GenMessage<PolicyResult> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 10);
+  messageDesc(file_statecraft_v1_review, 18);
 
 /**
  * @generated from message statecraft.v1.PolicyViolation
@@ -584,7 +866,7 @@ export type PolicyViolation = Message<"statecraft.v1.PolicyViolation"> & {
  * Use `create(PolicyViolationSchema)` to create a new message.
  */
 export const PolicyViolationSchema: GenMessage<PolicyViolation> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 11);
+  messageDesc(file_statecraft_v1_review, 19);
 
 /**
  * @generated from message statecraft.v1.PolicyEvaluation
@@ -636,7 +918,7 @@ export type PolicyEvaluation = Message<"statecraft.v1.PolicyEvaluation"> & {
  * Use `create(PolicyEvaluationSchema)` to create a new message.
  */
 export const PolicyEvaluationSchema: GenMessage<PolicyEvaluation> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 12);
+  messageDesc(file_statecraft_v1_review, 20);
 
 /**
  * @generated from message statecraft.v1.ViolationAcceptance
@@ -708,7 +990,7 @@ export type ViolationAcceptance = Message<"statecraft.v1.ViolationAcceptance"> &
  * Use `create(ViolationAcceptanceSchema)` to create a new message.
  */
 export const ViolationAcceptanceSchema: GenMessage<ViolationAcceptance> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 13);
+  messageDesc(file_statecraft_v1_review, 21);
 
 /**
  * @generated from message statecraft.v1.ActionDecision
@@ -735,7 +1017,7 @@ export type ActionDecision = Message<"statecraft.v1.ActionDecision"> & {
  * Use `create(ActionDecisionSchema)` to create a new message.
  */
 export const ActionDecisionSchema: GenMessage<ActionDecision> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 14);
+  messageDesc(file_statecraft_v1_review, 22);
 
 /**
  * @generated from message statecraft.v1.WorkflowCommand
@@ -772,7 +1054,7 @@ export type WorkflowCommand = Message<"statecraft.v1.WorkflowCommand"> & {
  * Use `create(WorkflowCommandSchema)` to create a new message.
  */
 export const WorkflowCommandSchema: GenMessage<WorkflowCommand> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 15);
+  messageDesc(file_statecraft_v1_review, 23);
 
 /**
  * @generated from message statecraft.v1.ExecutionRecord
@@ -819,7 +1101,7 @@ export type ExecutionRecord = Message<"statecraft.v1.ExecutionRecord"> & {
  * Use `create(ExecutionRecordSchema)` to create a new message.
  */
 export const ExecutionRecordSchema: GenMessage<ExecutionRecord> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 16);
+  messageDesc(file_statecraft_v1_review, 24);
 
 /**
  * @generated from message statecraft.v1.ReviewEvent
@@ -846,7 +1128,7 @@ export type ReviewEvent = Message<"statecraft.v1.ReviewEvent"> & {
  * Use `create(ReviewEventSchema)` to create a new message.
  */
 export const ReviewEventSchema: GenMessage<ReviewEvent> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 17);
+  messageDesc(file_statecraft_v1_review, 25);
 
 /**
  * @generated from message statecraft.v1.CreateDemoRequest
@@ -863,7 +1145,7 @@ export type CreateDemoRequest = Message<"statecraft.v1.CreateDemoRequest"> & {
  * Use `create(CreateDemoRequestSchema)` to create a new message.
  */
 export const CreateDemoRequestSchema: GenMessage<CreateDemoRequest> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 18);
+  messageDesc(file_statecraft_v1_review, 26);
 
 /**
  * @generated from message statecraft.v1.ActOnDemoRequest
@@ -885,7 +1167,7 @@ export type ActOnDemoRequest = Message<"statecraft.v1.ActOnDemoRequest"> & {
  * Use `create(ActOnDemoRequestSchema)` to create a new message.
  */
 export const ActOnDemoRequestSchema: GenMessage<ActOnDemoRequest> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 19);
+  messageDesc(file_statecraft_v1_review, 27);
 
 /**
  * @generated from message statecraft.v1.CreateDemoResponse
@@ -902,7 +1184,7 @@ export type CreateDemoResponse = Message<"statecraft.v1.CreateDemoResponse"> & {
  * Use `create(CreateDemoResponseSchema)` to create a new message.
  */
 export const CreateDemoResponseSchema: GenMessage<CreateDemoResponse> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 20);
+  messageDesc(file_statecraft_v1_review, 28);
 
 /**
  * @generated from message statecraft.v1.GetDemoRequest
@@ -919,7 +1201,7 @@ export type GetDemoRequest = Message<"statecraft.v1.GetDemoRequest"> & {
  * Use `create(GetDemoRequestSchema)` to create a new message.
  */
 export const GetDemoRequestSchema: GenMessage<GetDemoRequest> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 21);
+  messageDesc(file_statecraft_v1_review, 29);
 
 /**
  * @generated from message statecraft.v1.GetDemoResponse
@@ -936,7 +1218,7 @@ export type GetDemoResponse = Message<"statecraft.v1.GetDemoResponse"> & {
  * Use `create(GetDemoResponseSchema)` to create a new message.
  */
 export const GetDemoResponseSchema: GenMessage<GetDemoResponse> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 22);
+  messageDesc(file_statecraft_v1_review, 30);
 
 /**
  * @generated from message statecraft.v1.ActOnDemoResponse
@@ -953,7 +1235,32 @@ export type ActOnDemoResponse = Message<"statecraft.v1.ActOnDemoResponse"> & {
  * Use `create(ActOnDemoResponseSchema)` to create a new message.
  */
 export const ActOnDemoResponseSchema: GenMessage<ActOnDemoResponse> = /*@__PURE__*/
-  messageDesc(file_statecraft_v1_review, 23);
+  messageDesc(file_statecraft_v1_review, 31);
+
+/**
+ * Live source evidence has its own read-only contract. It cannot authorize plans.
+ *
+ * @generated from service statecraft.v1.SourceEvidenceService
+ */
+export const SourceEvidenceService: GenService<{
+  /**
+   * @generated from rpc statecraft.v1.SourceEvidenceService.ListChanges
+   */
+  listChanges: {
+    methodKind: "unary";
+    input: typeof ListChangesRequestSchema;
+    output: typeof ListChangesResponseSchema;
+  },
+  /**
+   * @generated from rpc statecraft.v1.SourceEvidenceService.GetSourceEvidence
+   */
+  getSourceEvidence: {
+    methodKind: "unary";
+    input: typeof GetSourceEvidenceRequestSchema;
+    output: typeof GetSourceEvidenceResponseSchema;
+  },
+}> = /*@__PURE__*/
+  serviceDesc(file_statecraft_v1_review, 0);
 
 /**
  * @generated from service statecraft.v1.ReviewService
@@ -968,7 +1275,7 @@ export const ReviewService: GenService<{
     output: typeof GetReviewResponseSchema;
   },
 }> = /*@__PURE__*/
-  serviceDesc(file_statecraft_v1_review, 0);
+  serviceDesc(file_statecraft_v1_review, 1);
 
 /**
  * Isolated simulation only. No production execution adapters are composed here.
@@ -1001,5 +1308,5 @@ export const DemoWorkflowService: GenService<{
     output: typeof ActOnDemoResponseSchema;
   },
 }> = /*@__PURE__*/
-  serviceDesc(file_statecraft_v1_review, 1);
+  serviceDesc(file_statecraft_v1_review, 2);
 

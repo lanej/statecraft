@@ -7,6 +7,13 @@ infrastructure change. The TypeScript app in `web/` exercises the review lifecyc
 against an isolated Go mock backend. Root-level `index.html`, `app.js`, and
 `styles.css` are an older static composition reference, not the current application.
 
+The same build also serves a separate read-only platform-infra source view.
+It lists PRs, patches, submitted GitHub reviews, check-runs, and commit statuses.
+Display the mode, capture time, source commit, and evidence limits prominently.
+Missing plans and complete root scope cannot imply approval or execution readiness.
+Keep source reviews separate from Statecraft plan decisions.
+See the [deployment boundary](docs/read-only-deployment.md).
+
 [Product intent](docs/product.md) defines users and invariants. The
 [roadmap](docs/roadmap.md) defines feature status and delivery order. This document
 owns interaction and presentation requirements; the current screenshots are
@@ -92,8 +99,9 @@ warning/destructive colors; brand color alone must not communicate status.
 Typography follows the lockup's Inter/system sans-serif stack, with a strong,
 tightly spaced title-case wordmark and readable supporting text.
 
-The app owns presentation tokens in `web/src/style.css` and composition in
-`web/src/review.ts`. Keep the SVGs as the source of truth and import them into the
+The mock workbench owns tokens in `web/src/style.css` and composition in `web/src/review.ts`.
+The read-only view uses `web/src/source.css` and `web/src/source.ts`.
+Keep the SVGs as the source of truth and import them into the
 app build rather than maintaining a second copy. Branding should support the dense
 review workspace without obscuring evidence or changing workflow meaning.
 
@@ -136,6 +144,10 @@ app with keyboard and pointer, including a narrow layout. Existing rendered-HTML
 tests and screenshots do not replace automated browser coverage or a full
 accessibility assessment.
 
+`web/browser/source.spec.ts` covers narrow read-only regressions through isolated API fixtures.
+Full decision-workflow and SSO coverage remain open.
+Local accessibility-rule checks do not establish comprehensive accessibility.
+
 `.ui-review/config.json` and its rules currently target the legacy root-level
 prototype and its nine-resource fixture. Their selectors and counts have not been
 migrated to `web/`; do not claim they validate this workbench. Recalibrate them
@@ -146,3 +158,8 @@ context sufficient to assess the change. Use durable URLs that render inline on
 GitHub and verify they load. Include a blocked/recovery state when relevant, and
 keep the PR prose focused on the final behavior and why it matters. Documentation-only
 updates do not need new screenshots.
+
+Source screenshots contain private platform-infra evidence.
+Store them in private platform-infra's `docs/statecraft/screenshots/`.
+Public Statecraft PRs can reference private durable GitHub URLs.
+Never upload private evidence to public Statecraft or a public image host.

@@ -8,8 +8,9 @@ TypeScript contracts use Statecraft types.
 
 Research checked 2026-09-25 against GitHub's REST documentation, go-github v92.0.0,
 and Atlantis v0.48.0. The adapters are implemented and tested with local HTTP
-servers. The executable composes the isolated mock workflow and store: no production
-credentials, GitHub writes, or Atlantis plan/apply calls are enabled. The
+servers. `cmd/statecraft` composes the isolated mock workflow and store.
+`cmd/statecraft-readonly` separately reads platform-infra source evidence through a generated GitHub client.
+Neither executable enables GitHub writes or Atlantis plan/apply calls. The
 [handoff](handoff.md) maps the running code; the [roadmap](roadmap.md) describes the
 evidence, identity, policy, and execution work needed to connect these adapters.
 
@@ -36,6 +37,21 @@ official or silently introduce another default tier. Reuse of SDKs or generation
 does not change the adapter boundary: provider types still map into Statecraft
 models, and domain behavior remains handwritten Statecraft code. Never edit
 generated clients by hand.
+
+### Read-only GitHub client
+
+Checked 2026-10-09: GitHub's [SDK catalog](https://docs.github.com/en/rest/using-the-rest-api/libraries-for-the-rest-api)
+lists official JavaScript, Ruby, and .NET SDKs; its Go SDK is third-party.
+The separate Go reader therefore follows the specification-generation tier.
+It uses GitHub's [official OpenAPI description](https://github.com/github/rest-api-description/tree/7dee0622aeecf9df3c5060ca28c7a57ee5007804)
+at revision `7dee0622aeecf9df3c5060ca28c7a57ee5007804`, with `oapi-codegen` v2.5.1.
+
+`make github-spec` rebuilds the GET-only specification slice and generated client.
+`make check-generated` detects generated drift.
+The transport additionally rejects non-GET GitHub requests.
+The fixed repository is `easypost/platform-infra`; public contracts contain Statecraft source-evidence models.
+Provider response types remain in `internal/adapters/githubread`.
+The older clients below remain unchanged and uncomposed in this runtime.
 
 ### Existing clients awaiting exception review
 
@@ -110,8 +126,16 @@ updates source metadata and `Review.SourceDecisions` while preserving Statecraft
 `Review.Decisions`, infrastructure roots, changes, and findings. Source history
 never becomes a Statecraft approval or refreshes a stale approval. Only an
 authenticated, persisted Statecraft decision can establish that binding. Source
-history stays internal until it has a distinct public API/UI; it is omitted from
-the public Connect review response and is not added to protobuf's approval list.
+history remains omitted from the public Connect review response and its approval list.
+The separate `SourceEvidenceService` exposes submitted source reviews as source evidence.
+It does not add them to `Review.Decisions`.
+
+The read-only reader captures check-runs and combined commit statuses for the current head.
+This includes upstream Atlantis indicators when GitHub reports them.
+It checks source head/base consistency around capture and discloses incomplete check/status lists.
+Patches remain provider excerpts; they do not guarantee a complete source diff.
+No status message establishes exact plan identity or verified apply.
+The [runbook](read-only-deployment.md) defines token permissions and IAP deployment.
 
 When an existing head changes or becomes unavailable, the review and its roots
 become `stale`. Retained changes, findings, and decisions are historical evidence;

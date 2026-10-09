@@ -1,0 +1,56 @@
+name: build-image
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "cmd/**"
+      - "internal/**"
+      - "gen/**"
+      - "web/**"
+      - "assets/**"
+      - "go.mod"
+      - "go.sum"
+      - "Dockerfile"
+      - ".dockerignore"
+      - ".github/workflows/build-image.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: statecraft-image
+  cancel-in-progress: false
+
+jobs:
+  image:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ vars.STATECRAFT_WIF_PROVIDER }}
+          service_account: statecraft-build@easypost-statecraft-dev.iam.gserviceaccount.com
+      - uses: google-github-actions/setup-gcloud@v3
+      - run: gcloud auth configure-docker us-east1-docker.pkg.dev --quiet
+      - uses: docker/setup-buildx-action@v3
+      - name: Build and push the read-only runtime
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64
+          tags: us-east1-docker.pkg.dev/easypost-statecraft-dev/statecraft/app:${{ github.sha }}
+          labels: org.opencontainers.image.revision=${{ github.sha }}
+      - name: Record the immutable image for platform-infra
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          echo "Use this image as application_image in platform-infra:" >> "$GITHUB_STEP_SUMMARY"
+          echo "us-east1-docker.pkg.dev/easypost-statecraft-dev/statecraft/app@${DIGEST}" >> "$GITHUB_STEP_SUMMARY"

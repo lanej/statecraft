@@ -12,9 +12,17 @@ The [mock workbench](steel-thread.md) is implemented: multi-root inspection, pol
 violation acceptance, plan approval, simulated execution/verification, and recovery
 scenarios. Generated Connect handlers/client replace the temporary JSON bridge;
 gofmt, Biome, schema compatibility, and reproducible generation are checked in CI.
-GitHub and Atlantis adapters have local contract tests and remain outside
-the executable. Policy ports exist; an OPA adapter does not. The
+The original GitHub and Atlantis adapters remain outside the mock executable.
+Policy ports exist; an OPA adapter does not. The
 [handoff](handoff.md) maps the implementation and its limitations.
+
+The separate read-only runtime inspects real `easypost/platform-infra` PR source evidence.
+Deployment configuration uses platform-infra, Cloud Run IAP, and an isolated repository credential.
+The [runbook](read-only-deployment.md) defines staged deployment and live verification.
+This slice adds no plans, complete root discovery, Statecraft decisions, or execution.
+Narrow source-view browser regressions run against isolated API fixtures in CI.
+Local real-source walkthroughs cover desktop/mobile presentation and refresh recovery.
+Deployed GCP/IAP access remains unverified.
 
 The [planning acceptance harness](planning-acceptance.md) exercises signed GitHub
 PR delivery through the real provider adapters against local HTTP mocks. It does
@@ -24,20 +32,20 @@ not mount a production webhook receiver or enable live planning in the demo.
 
 | Capability | Current state | Required destination / delivery |
 | --- | --- | --- |
-| Review and root discovery | One synthetic source change; four seeded roots | Repository onboarding and source-change list; explicit complete expected root scope from configured source/execution context. R2/R3 |
+| Review and root discovery | Real read-only platform-infra PR list; synthetic roots remain in mock runtime | Repository onboarding; explicit complete expected root scope from configured source/execution context. R2/R3 |
 | Plan evidence and semantic changes | Display strings and synthetic artifacts | Durable exact artifacts, typed before/after values, unknown/sensitive values, stable resource identity, versioned normalization and provenance. R2 |
 | Decision workspace | Five views, resource inspector, filtering, connected-resource links | Consistent evidence navigation, actionable missing context, large-plan investigation, accessible loading/error/recovery behavior. R2/R6 |
 | API contract | Generated Connect client/handler boundary, pinned local generators, format/schema/drift checks | R1 implemented; evolve the schema with evidence ingestion. |
 | Assessment | Two deterministic mock rules | Versioned OPA evaluation with complete expected coverage and explicit indeterminate results. R4 |
 | Violation acceptance | Request/grant, fixed personas, one-hour expiry | Authorized request/grant/deny/revoke, policy-specific conditions, scope, evidence, expiry and audit history; hard prohibitions remain hard. R3/R4 |
-| Human review | Demo approve/request changes bound to plan/head/assessment | Authenticated reviewers, required reviewers/roles, separation of duties where configured, stale/conflicting decision handling, and source synchronization without invented approvals. R3/R4 |
+| Human review | Separate GitHub review history in read-only view; mock plan decisions | Authenticated reviewers, required reviewers/roles, separation of duties where configured, stale/conflicting decision handling, and source synchronization without invented approvals. R3/R4 |
 | Execution | Synchronous simulation plus uncomposed Atlantis command client | Durable attempts/jobs, exact approved artifact enforcement, current gates, lock/concurrency controls, reconciliation and explicit partial/uncertain outcomes. R5 |
 | Verification | Simulated state agreement with health explicitly unknown | Actual post-apply state comparison and provenance; drift/incomplete verification distinct from success. Optional operational signals remain separately labeled. R5 |
 | History and audit | In-memory events and plan/decision identities | Immutable evidence and assessment history, reasons for invalidation, previous/current plan comparison, durable actor/time/source records and retention. R2–R5 |
 | Collaboration | Request-changes comment only | Threads on resources, properties, relationships and findings; resolution must not silently accept risk or authorize apply. R6 |
 | Impact graph | Illustrative links and a legacy static graph | Bounded neighborhoods, upstream/downstream traversal, path finding, root/module grouping and unknown-edge provenance at realistic scale. R6 |
 | Revert | Product/design intent only | New source proposal with lineage and explicit unrecoverable state/data consequences; normal review and execution controls. R7 |
-| Operating the service | Local loopback process, memory store | Tenant/repository access isolation, durable storage/backup, credential and artifact protection, observability, retention, and documented deployment/recovery. R2/R3/R5 |
+| Operating the service | Separate IAP-protected read-only deployment configuration; mock memory store | Verified deployment/access; durable storage/backup, observability, retention, and workflow recovery. R2/R3/R5 |
 | Assisted diagnosis/remediation | Future intent only | Evidence-grounded diagnosis and proposed source changes for human review after core evidence and controls exist. R8 |
 
 ## Delivery sequence
