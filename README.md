@@ -13,7 +13,8 @@ Statecraft is an experimental workbench for infrastructure changes attached to G
 Start with [AGENTS.md](./AGENTS.md) and the [agent handoff](./docs/handoff.md).
 The [roadmap](./docs/roadmap.md) records implemented features, required capabilities,
 dependencies, completion criteria, and open decisions. The recommended next slice
-is the durable proposal/evidence ingestion contract (R2).
+is implementing the [durable proposal/evidence contract](docs/evidence-ingestion.md)
+and its identity/ordering reducer and storage contract tests (R2).
 
 Product intent lives in [docs/product.md](./docs/product.md); interaction and visual
 rules live in [DESIGN.md](./DESIGN.md). The current app is `web/` plus the Go API.

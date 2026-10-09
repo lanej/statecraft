@@ -15,10 +15,13 @@ priority, feature gaps, and completion criteria. This file owns the current code
 map and practical continuation notes.
 
 **R1: generated Connect transport is implemented.** The recommended next task is
-**R2: durable proposal/evidence ingestion design** before selecting storage or
-expanding the synthetic demo shape. Preserve the current mock composition while
-that contract is developed. User feedback on the workbench can be addressed
-independently; do not treat the current composition as a frozen design.
+**R2: implement the durable proposal/evidence contract** before selecting storage
+or expanding the synthetic demo shape. The [ingestion contract](evidence-ingestion.md)
+defines identities, capture, ordering, normalized values, CODEOWNERS/reviewer
+requirements, and storage guarantees;
+its ports and persistence are not implemented. Start with the pure reducer and
+contract tests. Preserve the current mock composition. User feedback on the
+workbench can be addressed independently; do not treat the current composition as a frozen design.
 
 ## Current baseline
 

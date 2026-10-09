@@ -53,7 +53,9 @@ error behavior. The mock workflow remains isolated from external execution.
 
 ### R2 — Durable proposal and evidence model (next)
 
-Design the ingestion contract and storage port before choosing persistence details.
+The [ingestion and storage-port design](evidence-ingestion.md) is defined; its
+implementation and durable adapter remain open. Implement the pure identity/ordering
+reducer and storage contract tests before choosing persistence details.
 Capture repository, source change, commit, expected roots, root attempt identity,
 exact plan artifacts/digests, structured plan JSON, logs, timestamps, and provenance.
 Normalize typed changes and relationships; distinguish unknown, redacted, absent,
@@ -72,6 +74,9 @@ freshness and provenance from those records.
 Configure GitHub App installation and user identity behind existing boundaries.
 Add repository access and root discovery, authenticated/replay-resistant webhook
 intake, source refresh, and reviewer capabilities from trusted backend context.
+Read base-branch CODEOWNERS, resolve affected-path/root owners and current team/access
+evidence, and capture effective review requirements as specified in the
+[ownership contract](evidence-ingestion.md#code-ownership-and-reviewer-requirements).
 Persist actor/role evidence and human decisions. Keep external GitHub review history
 distinct from authoritative Statecraft plan approval; define reliable publication
 of checks and human review results with explicit synchronization failures.

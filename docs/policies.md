@@ -68,6 +68,11 @@ current approval and acceptance records, and authoritative external requirements
 The application assembles these inputs from trusted services and stores. It does
 not trust role claims, acceptance status, or policy selection supplied by the UI.
 
+Required reviewer context includes the versioned [CODEOWNERS ownership snapshot](evidence-ingestion.md#code-ownership-and-reviewer-requirements), resolved
+principals, membership/access evidence and effective review requirements. Ownership
+selects reviewers; it does not grant acceptance or execution authority. Changes to
+this context trigger eligibility reevaluation without deleting historical decisions.
+
 Required context depends on the action: running a plan targets a source revision
 and expected roots before a PlanSet exists; approval and apply target an exact
 PlanSet; acceptance targets specified violations. Planning must not depend on an
