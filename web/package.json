@@ -19,6 +19,6 @@
     "@bufbuild/buf": "1.57.2",
     "@bufbuild/protoc-gen-es": "2.15.0",
     "typescript": "^5.7.2",
-    "vite": "^6.0.1"
+    "vite": "^6.4.5"
   }
 }
